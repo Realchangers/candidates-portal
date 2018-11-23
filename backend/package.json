@@ -5,7 +5,8 @@
   "scripts": {
     "start": "sls offline start",
     "build": "sls package",
-    "test": "jest ."
+    "test": "jest .",
+    "test:coverage": "jest --coverage"
   },
   "devDependencies": {
     "jest": "^23.6.0",

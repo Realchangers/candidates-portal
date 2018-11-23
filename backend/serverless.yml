@@ -1,5 +1,12 @@
 service: web-react-app
 
+package:
+  exclude:
+    - coverage/**
+    - jest.config.js
+    - README.md
+    - yarn.lock
+
 provider:
   name: aws
   runtime: nodejs8.10
