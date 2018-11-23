@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "sls offline start"
+    "start": "sls offline start",
+    "build": "sls package",
+    "test": "jest ."
   },
   "devDependencies": {
+    "jest": "^23.6.0",
     "serverless-offline": "^3.31.3"
   },
   "dependencies": {
