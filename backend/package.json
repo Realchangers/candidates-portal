@@ -6,7 +6,10 @@
     "start": "sls offline start",
     "build": "sls package",
     "test": "jest .",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "dynamodb:install": "sls dynamodb install",
+    "dynamodb:remove": "sls dynamodb remove",
+    "deploy": "sls deploy"
   },
   "dependencies": {
     "aws-sdk": "^2.361.0",
@@ -14,6 +17,7 @@
   },
   "devDependencies": {
     "jest": "^23.6.0",
+    "serverless-dynamodb-local": "^0.2.35",
     "serverless-offline": "^3.31.3"
   }
 }

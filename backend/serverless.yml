@@ -1,4 +1,4 @@
-service: web-react-app
+service: web-react-app-backend
 
 package:
   exclude:
@@ -6,6 +6,12 @@ package:
     - jest.config.js
     - README.md
     - yarn.lock
+    - .dynamodb/**
+
+custom:
+  dynamodb:
+    start:
+      migrate: true
 
 provider:
   name: aws
@@ -14,10 +20,10 @@ provider:
     DYNAMODB_TABLE: ${self:service}-${self:provider.stage}
   iamRoleStatements:
    - Effect: Allow
-      Action:
-        - dynamodb:GetItem
-        - dynamodb:UpdateItem
-      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
+     Action:
+      - dynamodb:GetItem
+      - dynamodb:UpdateItem
+     Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
 
 functions:
   hello:
@@ -28,7 +34,8 @@ functions:
           method: get
 
 plugins:
-  - serverless-offline
+  - serverless-dynamodb-local
+  - serverless-offline # must be last plugin
 
 resources:
   Resources:
