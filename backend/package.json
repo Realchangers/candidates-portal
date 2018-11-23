@@ -1,0 +1,11 @@
+{
+  "name": "web-react-app-backend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "sls offline start"
+  },
+  "devDependencies": {
+    "serverless-offline": "^3.31.3"
+  }
+}
