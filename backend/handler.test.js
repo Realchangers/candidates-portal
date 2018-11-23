@@ -5,7 +5,7 @@ it('should just work', () => {
 
     const event = {
       queryStringParameters: {
-        query: "{greeting(firstName: \"Jeremy\")}"
+        query: '{greeting(firstName: "Jeremy")}'
       }
     }
     const context = {}
