@@ -7,7 +7,7 @@ import {
 
 function fetchQuery(operation, variables, ) {
   return fetch('/query', {
-    method: 'GET',
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
