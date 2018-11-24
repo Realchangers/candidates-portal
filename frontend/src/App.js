@@ -1,15 +1,33 @@
 import React, { Component } from 'react'
+import graphql from 'babel-plugin-relay/macro'
+import { QueryRenderer } from 'react-relay'
 
+import environment from './RelayEnvironment'
 import './App.scss'
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <center>
-          <a href="about.html" className="button">Learn More</a>
-        </center>
-      </div>
+      <QueryRenderer
+        environment={environment}
+        query={graphql`
+          query AppQuery {
+            user(id: "123") {
+              name
+            }
+          }
+      `}
+        variables={{}}
+        render={({ error, props }) => {
+          if (error) {
+            return <div>Error! {error}</div>;
+          }
+          if (!props) {
+            return <div>Loading...</div>;
+          }
+          return <div>User ID: {props.greeting}</div>;
+        }}
+      />
     );
   }
 }
