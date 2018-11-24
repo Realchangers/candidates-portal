@@ -12,6 +12,8 @@ custom:
   dynamodb:
     start:
       migrate: true
+  serverless-offline:
+    port: 8080
 
 provider:
   name: aws
