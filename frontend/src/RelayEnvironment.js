@@ -6,7 +6,7 @@ import {
 } from 'relay-runtime';
 
 function fetchQuery(operation, variables, ) {
-  return fetch('https://localhost:8080/query', {
+  return fetch('http://localhost:8080/query', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
