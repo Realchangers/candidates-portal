@@ -12,8 +12,8 @@ class App extends Component {
         environment={environment}
         query={graphql`
           query AppQuery {
-            user(id: "123") {
-              name
+            greeting {
+              nickname
             }
           }
       `}
