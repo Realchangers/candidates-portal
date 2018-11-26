@@ -12,7 +12,7 @@ class App extends Component {
         environment={environment}
         query={graphql`
           query AppQuery {
-            greeting(firstName: "Jeremy") {
+            user(firstName: "Jeremy") {
               nickname
             }
           }
@@ -25,7 +25,7 @@ class App extends Component {
           if (!props) {
             return <div>Loading...</div>;
           }
-          return <div>User ID: {props.greeting}</div>;
+          return <div>User ID: {props.nickname}</div>;
         }}
       />
     );
