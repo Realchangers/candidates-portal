@@ -37,7 +37,7 @@ const getUserByFirstName = firstName =>
         return ({
           id: "hohoho",
           firstName: firstName,
-          nickname: "Not specified"
+          nickname: firstName
         })
       }
     })
