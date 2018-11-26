@@ -28,12 +28,12 @@ provider:
      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
 
 functions:
-  hello:
+  query:
     handler: handler.query
     events:
       - http:
           path: query
-          method: get
+          method: post
 
 plugins:
   - serverless-dynamodb-local
