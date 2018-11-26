@@ -20,18 +20,27 @@ const {
   GraphQLNonNull
 } = require('graphql')
 
-const getGreeting = firstName =>
+const getUserByFirstName = firstName =>
   dynamoDb.get({
     TableName: process.env.DYNAMODB_TABLE,
     Key: { firstName },
   }).promise()
     .then(result => {
-      if (!result.Item) {
-        return firstName
+      if (result.Item) {
+        return ({
+          id: "hohoho",
+          firstName: firstName,
+          nickname: result.Item.nickname
+        })
       }
-      return result.Item.nickname
+      else {
+        return ({
+          id: "hohoho",
+          firstName: firstName,
+          nickname: "Not specified"
+        })
+      }
     })
-    .then(name => `Hello, ${name}`)
 
 const changeNickname = (firstName, nickname) =>
   dynamoDb.update({
@@ -44,19 +53,25 @@ const changeNickname = (firstName, nickname) =>
   }).promise()
     .then(() => nickname)
 
-// Here we declare the schema and resolvers for the query
+const userType = new GraphQLObjectType({
+  name: 'User',
+  fields: {
+    id: { type: GraphQLString },
+    firstName: { type: GraphQLString },
+    nickname: { type: GraphQLString },
+  }
+})
+
 const schema = new GraphQLSchema({
   query: new GraphQLObjectType({
-    name: 'RootQueryType', // an arbitrary name
+    name: 'RootQueryType',
     fields: {
-      // the query has a field called 'greeting'
-      greeting: {
-        // we need to know the user's name to greet them
-        args: { firstName: { name: 'firstName', type: new GraphQLNonNull(GraphQLString) } },
-        // the greeting message is a string
-        type: GraphQLString,
-        // resolve to a greeting message
-        resolve: (parent, args) => getGreeting(args.firstName)
+      user: {
+        type: userType,
+        args: {
+          firstName: { type: new GraphQLNonNull(GraphQLString) }
+        },
+        resolve: (parent, args) => getUserByFirstName(args.firstName)
       }
     }
   }),
@@ -65,24 +80,22 @@ const schema = new GraphQLSchema({
     fields: {
       changeNickname: {
         args: {
-          // we need the user's first name as well as a preferred nickname
           firstName: { name: 'firstName', type: new GraphQLNonNull(GraphQLString) },
           nickname: { name: 'nickname', type: new GraphQLNonNull(GraphQLString) }
         },
         type: GraphQLString,
-        // update the nickname
         resolve: (parent, args) => changeNickname(args.firstName, args.nickname)
       }
     }
   })
 })
 
-// We want to make a GET request with ?query=<graphql query>
-// The event properties are specific to AWS. Other providers will differ.
 module.exports.query = (event, context, callback) => {
-  console.log(`Request body: ${event.body}`)
 
-  graphql(schema, event.body)
+  const query = JSON.parse(event.body).query
+  console.log(`Query: ${query}`)
+
+  graphql(schema, query)
     .then(result => callback(null, { statusCode: 200, body: JSON.stringify(result) }))
     .catch(error => callback(null, {
       statusCode: 500, body: JSON.stringify({ error: error.message })
