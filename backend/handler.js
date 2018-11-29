@@ -28,8 +28,8 @@ const getUserByFirstName = firstName =>
     .then(result => {
       if (result.Item) {
         return ({
-          id: "hohoho",
-          firstName: firstName,
+          id: "hohoho", // currently doesn't exist in database
+          firstName: result.Item.firstName,
           nickname: result.Item.nickname
         })
       }
@@ -90,14 +90,25 @@ const schema = new GraphQLSchema({
   })
 })
 
+const parseQuery = (event) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const result = JSON.parse(event.body).query
+      console.log(`Query: ${result}`)
+
+      resolve(result)
+    }
+    catch (error) {
+      reject(new Error(`Unable to parse request. Reason: ${error.message}`))
+    }
+  })
+}
+
 module.exports.query = (event, context, callback) => {
-
-  const query = JSON.parse(event.body).query
-  console.log(`Query: ${query}`)
-
-  graphql(schema, query)
+  parseQuery(event)
+    .then(query => graphql(schema, query))
     .then(result => callback(null, { statusCode: 200, body: JSON.stringify(result) }))
     .catch(error => callback(null, {
-      statusCode: 500, body: JSON.stringify({ error: error.message })
+      statusCode: 500, body: JSON.stringify({ errors: [{ message: error.message }] })
     }))
 }
