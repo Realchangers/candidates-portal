@@ -18,17 +18,13 @@ module.exports.getUserByFirstName = (firstName) => {
     .then(result => {
       if (result.Item) {
         return ({
-          id: "hohoho", // currently doesn't exist in database
+          id: result.Item.id,
           firstName: result.Item.firstName,
           nickname: result.Item.nickname
         })
       }
       else {
-        return ({
-          id: "hohoho",
-          firstName: firstName,
-          nickname: firstName
-        })
+        return null
       }
     })
 }
