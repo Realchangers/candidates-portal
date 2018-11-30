@@ -21,7 +21,10 @@ const parseQuery = (event) => {
 module.exports.query = (event, context, callback) => {
   parseQuery(event)
     .then(query => graphql(schema, query))
-    .then(result => callback(null, { statusCode: 200, body: JSON.stringify(result) }))
+    .then(result => {
+      const statusCode = result.errors ? 500 : 200
+      callback(null, { statusCode: statusCode, body: JSON.stringify(result) })
+    })
     .catch(error => callback(null, {
       statusCode: 500, body: JSON.stringify({ errors: [{ message: error.message }] })
     }))
