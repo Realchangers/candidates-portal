@@ -4,15 +4,15 @@ const {
   GraphQLSchema,
   GraphQLObjectType,
   GraphQLString,
-  GraphQLNonNull
+  GraphQLNonNull,
+  GraphQLID
 } = require('graphql')
 
 const userType = new GraphQLObjectType({
   name: 'User',
   fields: {
-    id: { type: GraphQLString },
-    firstName: { type: GraphQLString },
-    nickname: { type: GraphQLString },
+    id: { type: GraphQLID },
+    userName: { type: GraphQLString }
   }
 })
 
@@ -23,22 +23,22 @@ module.exports.schema = new GraphQLSchema({
       user: {
         type: userType,
         args: {
-          firstName: { type: new GraphQLNonNull(GraphQLString) }
+          id: { type: new GraphQLNonNull(GraphQLID) }
         },
-        resolve: (parent, args) => database.getUserByFirstName(args.firstName)
+        resolve: (parent, args) => database.userById(args.id)
       }
     }
   }),
   mutation: new GraphQLObjectType({
-    name: 'RootMutationType', // an arbitrary name
+    name: 'RootMutationType',
     fields: {
-      changeNickname: {
+      changeUserName: {
         args: {
-          firstName: { name: 'firstName', type: new GraphQLNonNull(GraphQLString) },
-          nickname: { name: 'nickname', type: new GraphQLNonNull(GraphQLString) }
+          id: { name: 'id', type: new GraphQLNonNull(GraphQLID) },
+          userName: { name: 'userName', type: new GraphQLNonNull(GraphQLString) }
         },
         type: GraphQLString,
-        resolve: (parent, args) => database.changeNickname(args.firstName, args.nickname)
+        resolve: (parent, args) => database.updateUserById(args.id, args.userName)
       }
     }
   })

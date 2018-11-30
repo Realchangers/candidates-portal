@@ -10,32 +10,30 @@ if (process.env.IS_OFFLINE) {
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoDbConfig)
 
-module.exports.getUserByFirstName = (firstName) => {
+module.exports.userById = (id) => {
   return dynamoDb.get({
     TableName: process.env.DYNAMODB_TABLE,
-    Key: { firstName },
+    Key: { id },
   }).promise()
     .then(result => {
       if (result.Item) {
         return ({
           id: result.Item.id,
-          firstName: result.Item.firstName,
-          nickname: result.Item.nickname
+          userName: result.Item.userName
         })
       }
-      else {
-        return null
-      }
+
+      return null
     })
 }
 
-module.exports.changeNickname = (firstName, nickname) => {
+module.exports.updateUserById = (id, userName) => {
   return dynamoDb.update({
     TableName: process.env.DYNAMODB_TABLE,
-    Key: { firstName },
-    UpdateExpression: 'SET nickname = :nickname',
+    Key: { id },
+    UpdateExpression: 'SET userName = :userName',
     ExpressionAttributeValues: {
-      ':nickname': nickname
+      ':userName': userName
     }
-  }).promise().then(() => nickname)
+  }).promise().then(() => userName)
 }
