@@ -11,20 +11,23 @@ class User extends Component {
         environment={environment}
         query={graphql`
           query UserQuery {
-            user(firstName: "Jeremy") {
-              nickname
+            user(id: "123") {
+              userName
             }
           }
       `}
         variables={{}}
         render={({ error, props }) => {
           if (error) {
-            return <div>Error! {error}</div>;
+            return <div>Error! {error}</div>
           }
           if (!props) {
-            return <div>Loading...</div>;
+            return <div>Loading...</div>
           }
-          return <div>Nickname: {props.user.nickname}</div>;
+          if (props.user) {
+            return <div>Nickname: {props.user.userName}</div>
+          }
+          return <div>Nickname: Unknown</div>
         }}
       />
     );

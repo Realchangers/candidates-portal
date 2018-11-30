@@ -1,9 +1,8 @@
 type Query {
-  user(firstName: String): User
+  user(id: ID): User
 }
 
 type User {
   id: ID
-  nickname: String
-  firstName: String
+  userName: String
 }
