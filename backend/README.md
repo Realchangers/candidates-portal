@@ -10,6 +10,6 @@
 ## Deploy
 * run `yarn deploy` to deploy application to AWS
 ## Test DynamoDB
-* query: `curl -G http://localhost:8080/query --data-urlencode 'query={greeting(firstName: "Jeremy")}'`
-* update: `curl -G 'http://localhost:8080/query' --data-urlencode 'query=mutation {changeNickname(firstName: "Jeremy", nickname: "Jer")}'`
+* query: `curl http://localhost:8080/query -d '{"query": "query UserQuery { user(id: \"123\") {userName id}}"}'`
+* update: `curl 'http://localhost:8080/query' -d '{"query":"mutation { changeUserName(id: \"123\", userName: \"Jeremy\")}"}'`
 * **note**: DynamoDB is in-memory database, so no changes will be persisted after shutdown
