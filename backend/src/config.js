@@ -1,8 +1,9 @@
 const AWS = require('aws-sdk')
 
 module.exports.documentClient = () => {
+
   let dynamoDbConfig = undefined
-  if (process.env.IS_OFFLINE) {
+  if (process.env.IS_OFFLINE === 'true') {
     dynamoDbConfig = {
       region: 'localhost',
       endpoint: 'http://localhost:8000'
