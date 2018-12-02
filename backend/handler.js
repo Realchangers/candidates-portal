@@ -41,16 +41,13 @@ const parsePostRequest = (event) => {
       return
     }
 
-    let query
     try {
-      query = JSON.parse(body).query
+      resolve(JSON.parse(body).query)
     }
     catch (error) {
       reject(new Error(`Unable to parse request. Reason: ${error.message}`))
       return
     }
-
-    resolve(query)
   })
 }
 
