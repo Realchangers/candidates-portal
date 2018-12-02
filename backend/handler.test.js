@@ -69,12 +69,6 @@ it('should reject unsupported request type', () => {
 
 it('should reject malformed request', () => {
   return new Promise((resolve) => {
-    service.userByUserName.mockResolvedValueOnce({
-      userName: 'user@gmail.com',
-      firstName: 'Test',
-      lastName: 'User'
-    })
-
     const event = {
       httpMethod: 'POST',
       body: '<xml><query>hohoho</query></xml>'
