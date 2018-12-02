@@ -1,8 +1,7 @@
 'use strict';
 
 const { graphql } = require('graphql')
-
-const { schema } = require('./src/graphql')
+const { schema } = require('./src/schema')
 
 const parseQuery = (event) => {
   return new Promise((resolve, reject) => {
