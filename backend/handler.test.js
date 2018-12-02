@@ -38,7 +38,7 @@ it('should process POST request correctly', () => {
 
     const event = {
       httpMethod: 'POST',
-      body: '{"query":"query UserQuery { user(userName: \\"boucekm@gmail.com\\") { userName firstName lastName  }}"}'
+      body: '{"query":"query UserQuery { user(userName: \\"user@gmail.com\\") { userName firstName lastName  }}"}'
     }
 
     handler.query(event, undefined, (error, result) => {
