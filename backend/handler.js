@@ -4,28 +4,53 @@ const { graphql } = require('graphql')
 const { schema } = require('./src/schema')
 
 const parseQuery = (event) => {
+  switch (event.httpMethod) {
+    case 'GET':
+      return parseGetRequest(event)
+    case 'POST':
+      return parsePostRequest(event)
+    default:
+      return Promise.reject(new Error(`Unsupported HTTP method: ${event.httpMethod}`))
+  }
+}
+
+const parseGetRequest = (event) => {
   return new Promise((resolve, reject) => {
 
-    if (event.queryStringParameters) {
-      const getQuery = event.queryStringParameters.query
-      if (getQuery) {
-        resolve(getQuery)
-        return
-      }
+    if (!event.queryStringParameters) {
+      reject(new Error('Unable to find parameter "query" in GET request.'))
+      return
     }
 
+    const query = event.queryStringParameters.query
+    if (!query) {
+      reject(new Error('Unable to find parameter "query" in GET request.'))
+      return
+    }
+
+    resolve(query)
+  })
+}
+
+const parsePostRequest = (event) => {
+  return new Promise((resolve, reject) => {
+
+    const body = event.body
+    if (!body) {
+      reject(new Error('No body specified in POST request.'))
+      return
+    }
+
+    let query
     try {
-      const postQuery = JSON.parse(event.body).query
-      if (postQuery) {
-        resolve(postQuery)
-      }
-      else {
-        reject(new Error(`Unable to find query in parameter.`))
-      }
+      query = JSON.parse(body).query
     }
     catch (error) {
       reject(new Error(`Unable to parse request. Reason: ${error.message}`))
+      return
     }
+
+    resolve(query)
   })
 }
 
