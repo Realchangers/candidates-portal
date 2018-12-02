@@ -10,16 +10,17 @@ if (process.env.IS_OFFLINE) {
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoDbConfig)
 
-module.exports.userById = (id) => {
+module.exports.userByUserName = (userName) => {
   return dynamoDb.get({
     TableName: process.env.DYNAMODB_TABLE,
-    Key: { id },
+    Key: { userName },
   }).promise()
     .then(result => {
       if (result.Item) {
         return ({
-          id: result.Item.id,
-          userName: result.Item.userName
+          userName: result.Item.userName,
+          firstName: result.Item.firstName,
+          lastName: result.Item.lastName
         })
       }
 
@@ -27,13 +28,26 @@ module.exports.userById = (id) => {
     })
 }
 
-module.exports.updateUserById = (id, userName) => {
+module.exports.insertUser = (userName, password, firstName, lastName) => {
+  // put new user, or replace existing one
+  return dynamoDb.put({
+    TableName: process.env.DYNAMODB_TABLE,
+    Item: {
+      'userName': userName,
+      'password': password,
+      'firstName': firstName,
+      'lastName': lastName
+    }
+  }).promise().then(() => userName)
+}
+
+module.exports.changeUserPassword = (userName, password) => {
   return dynamoDb.update({
     TableName: process.env.DYNAMODB_TABLE,
-    Key: { id },
-    UpdateExpression: 'SET userName = :userName',
+    Key: { userName },
+    UpdateExpression: 'SET password = :password',
     ExpressionAttributeValues: {
-      ':userName': userName
+      ':password': password
     }
   }).promise().then(() => userName)
 }

@@ -11,8 +11,10 @@ const {
 const userType = new GraphQLObjectType({
   name: 'User',
   fields: {
-    id: { type: GraphQLID },
-    userName: { type: GraphQLString }
+    userName: { type: GraphQLID },
+    password: { type: GraphQLString },
+    firstName: { type: GraphQLString },
+    lastName: { type: GraphQLString }
   }
 })
 
@@ -23,22 +25,32 @@ module.exports.schema = new GraphQLSchema({
       user: {
         type: userType,
         args: {
-          id: { type: new GraphQLNonNull(GraphQLID) }
+          userName: { type: new GraphQLNonNull(GraphQLID) }
         },
-        resolve: (parent, args) => database.userById(args.id)
+        resolve: (parent, args) => database.userByUserName(args.userName)
       }
     }
   }),
   mutation: new GraphQLObjectType({
     name: 'RootMutationType',
     fields: {
-      changeUserName: {
+      createUser: {
         args: {
-          id: { name: 'id', type: new GraphQLNonNull(GraphQLID) },
-          userName: { name: 'userName', type: new GraphQLNonNull(GraphQLString) }
+          userName: { type: new GraphQLNonNull(GraphQLString) },
+          password: { type: new GraphQLNonNull(GraphQLString) },
+          firstName: { type: new GraphQLNonNull(GraphQLString) },
+          lastName: { type: new GraphQLNonNull(GraphQLString) }
         },
         type: GraphQLString,
-        resolve: (parent, args) => database.updateUserById(args.id, args.userName)
+        resolve: (parent, args) => database.insertUser(args.userName, args.password, args.firstName, args.lastName)
+      },
+      changeUserPassword: {
+        args: {
+          userName: { type: new GraphQLNonNull(GraphQLID) },
+          password: { type: new GraphQLNonNull(GraphQLString) }
+        },
+        type: GraphQLString,
+        resolve: (parent, args) => database.changeUserPassword(args.id, args.userName)
       }
     }
   })
