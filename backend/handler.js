@@ -18,13 +18,13 @@ const parseGetRequest = (event) => {
   return new Promise((resolve, reject) => {
 
     if (!event.queryStringParameters) {
-      reject(new Error('Unable to find parameter "query" in GET request.'))
+      reject(new Error("No parameters provided. You must provide 'query' parameter in the request."))
       return
     }
 
     const query = event.queryStringParameters.query
     if (!query) {
-      reject(new Error('Unable to find parameter "query" in GET request.'))
+      reject(new Error("Unable to find parameter 'query' in GET request."))
       return
     }
 
@@ -41,13 +41,22 @@ const parsePostRequest = (event) => {
       return
     }
 
+    let parsedJSON = undefined
     try {
-      resolve(JSON.parse(body).query)
+      parsedJSON = JSON.parse(body)
     }
     catch (error) {
       reject(new Error(`Unable to parse request. Reason: ${error.message}`))
       return
     }
+
+    const query = parsedJSON.query
+    if (!query) {
+      reject(new Error("Unable to find field 'query' in JSON payload."))
+      return
+    }
+
+    resolve(query)
   })
 }
 

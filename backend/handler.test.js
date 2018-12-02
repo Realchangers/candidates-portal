@@ -67,7 +67,58 @@ it('should reject unsupported request type', () => {
   })
 })
 
-it('should reject malformed request', () => {
+it('should reject query without parameters', () => {
+  return new Promise((resolve) => {
+    const event = {
+      httpMethod: 'GET'
+    }
+
+    handler.query(event, undefined, (error, result) => {
+      expect(error).toBeNull()
+      expect(result.statusCode).toBe(500)
+      expect(result.body).toBe('{"errors":[{"message":"No parameters provided. You must provide \'query\' parameter in the request."}]}')
+
+      resolve()
+    })
+  })
+})
+
+it('should reject query with wrong parameters', () => {
+  return new Promise((resolve) => {
+    const event = {
+      httpMethod: 'GET',
+      queryStringParameters: {
+        yohoho: 'query UserQuery { user(userName: "user@gmail.com") { userName firstName lastName  }}'
+      }
+    }
+
+    handler.query(event, undefined, (error, result) => {
+      expect(error).toBeNull()
+      expect(result.statusCode).toBe(500)
+      expect(result.body).toBe('{"errors":[{"message":"Unable to find parameter \'query\' in GET request."}]}')
+
+      resolve()
+    })
+  })
+})
+
+it('should reject POST request without body', () => {
+  return new Promise((resolve) => {
+    const event = {
+      httpMethod: 'POST'
+    }
+
+    handler.query(event, undefined, (error, result) => {
+      expect(error).toBeNull()
+      expect(result.statusCode).toBe(500)
+      expect(result.body).toBe('{"errors":[{"message":"No body specified in POST request."}]}')
+
+      resolve()
+    })
+  })
+})
+
+it('should reject POST request with incorrect JSON payload', () => {
   return new Promise((resolve) => {
     const event = {
       httpMethod: 'POST',
@@ -78,6 +129,23 @@ it('should reject malformed request', () => {
       expect(error).toBeNull()
       expect(result.statusCode).toBe(500)
       expect(result.body).toBe('{"errors":[{"message":"Unable to parse request. Reason: Unexpected token < in JSON at position 0"}]}')
+
+      resolve()
+    })
+  })
+})
+
+it('should reject POST request with JSON payload without query', () => {
+  return new Promise((resolve) => {
+    const event = {
+      httpMethod: 'POST',
+      body: '{"yolo": "here goes my query"}'
+    }
+
+    handler.query(event, undefined, (error, result) => {
+      expect(error).toBeNull()
+      expect(result.statusCode).toBe(500)
+      expect(result.body).toBe('{"errors":[{"message":"Unable to find field \'query\' in JSON payload."}]}')
 
       resolve()
     })
