@@ -1,8 +1,10 @@
 type Query {
-  user(id: ID): User
+  user(userName: String): User
 }
 
 type User {
-  id: ID
-  userName: String
+  userName: ID
+  password: String
+  firstName: String
+  lastName: String
 }

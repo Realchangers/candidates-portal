@@ -11,8 +11,9 @@ class User extends Component {
         environment={environment}
         query={graphql`
           query UserQuery {
-            user(id: "123") {
-              userName
+            user(userName: "test@gmail.com") {
+              firstName
+              lastName
             }
           }
       `}
@@ -24,10 +25,10 @@ class User extends Component {
           if (!props) {
             return <div>Loading...</div>
           }
-          if (props.user) {
-            return <div>Nickname: {props.user.userName}</div>
+          if (!props.user) {
+            return <div>Unable to find user with username 'test@gmail.com'.</div>
           }
-          return <div>Nickname: Unknown</div>
+          return <div>Welcome {props.user.firstName} {props.user.lastName}</div>
         }}
       />
     );
