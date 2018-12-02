@@ -4,7 +4,7 @@ const service = require('./src/service')
 jest.mock('./src/service')
 
 it('should process GET request correctly', () => {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     service.userByUserName.mockResolvedValueOnce({
       userName: 'user@gmail.com',
       firstName: 'Test',
@@ -29,7 +29,7 @@ it('should process GET request correctly', () => {
 })
 
 it('should process POST request correctly', () => {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     service.userByUserName.mockResolvedValueOnce({
       userName: 'user@gmail.com',
       firstName: 'Test',
@@ -52,7 +52,7 @@ it('should process POST request correctly', () => {
 })
 
 it('should reject unsupported request type', () => {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const event = {
       httpMethod: 'PUT'
     }
@@ -68,7 +68,7 @@ it('should reject unsupported request type', () => {
 })
 
 it('should reject query without parameters', () => {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const event = {
       httpMethod: 'GET'
     }
@@ -84,7 +84,7 @@ it('should reject query without parameters', () => {
 })
 
 it('should reject query with wrong parameters', () => {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const event = {
       httpMethod: 'GET',
       queryStringParameters: {
@@ -103,7 +103,7 @@ it('should reject query with wrong parameters', () => {
 })
 
 it('should reject POST request without body', () => {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const event = {
       httpMethod: 'POST'
     }
@@ -119,7 +119,7 @@ it('should reject POST request without body', () => {
 })
 
 it('should reject POST request with incorrect JSON payload', () => {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const event = {
       httpMethod: 'POST',
       body: '<xml><query>hohoho</query></xml>'
@@ -136,7 +136,7 @@ it('should reject POST request with incorrect JSON payload', () => {
 })
 
 it('should reject POST request with JSON payload without query', () => {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const event = {
       httpMethod: 'POST',
       body: '{"yolo": "here goes my query"}'
