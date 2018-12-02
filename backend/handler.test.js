@@ -38,7 +38,11 @@ it('should process POST request correctly', () => {
 
     const event = {
       httpMethod: 'POST',
-      body: '{"query":"query UserQuery { user(userName: \\"user@gmail.com\\") { userName firstName lastName  }}"}'
+      body:
+        '{\
+          "query":"query UserQuery($userName: ID!) { user(userName: $userName) { userName firstName lastName  }}",\
+          "variables":{"userName":"test@gmail.com"}\
+        }'
     }
 
     handler.query(event, undefined, (error, result) => {
@@ -76,7 +80,7 @@ it('should reject query without parameters', () => {
     handler.query(event, undefined, (error, result) => {
       expect(error).toBeNull()
       expect(result.statusCode).toBe(500)
-      expect(result.body).toBe('{"errors":[{"message":"No parameters provided. You must provide \'query\' parameter in the request."}]}')
+      expect(result.body).toBe('\{"errors":[{"message":"No parameters provided. You must provide \'query\' parameter in the request."}]}')
 
       resolve()
     })
