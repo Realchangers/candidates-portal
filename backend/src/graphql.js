@@ -1,4 +1,4 @@
-const database = require('./dynamo-db')
+const service = require('./service')
 
 const {
   GraphQLSchema,
@@ -27,7 +27,7 @@ module.exports.schema = new GraphQLSchema({
         args: {
           userName: { type: new GraphQLNonNull(GraphQLID) }
         },
-        resolve: (parent, args) => database.userByUserName(args.userName)
+        resolve: (parent, args) => service.userByUserName(args.userName)
       }
     }
   }),
@@ -42,7 +42,7 @@ module.exports.schema = new GraphQLSchema({
           lastName: { type: new GraphQLNonNull(GraphQLString) }
         },
         type: GraphQLString,
-        resolve: (parent, args) => database.insertUser(args.userName, args.password, args.firstName, args.lastName)
+        resolve: (parent, args) => service.insertUser(args.userName, args.password, args.firstName, args.lastName)
       },
       changeUserPassword: {
         args: {
@@ -50,7 +50,7 @@ module.exports.schema = new GraphQLSchema({
           password: { type: new GraphQLNonNull(GraphQLString) }
         },
         type: GraphQLString,
-        resolve: (parent, args) => database.changeUserPassword(args.id, args.userName)
+        resolve: (parent, args) => service.changeUserPassword(args.id, args.userName)
       }
     }
   })
