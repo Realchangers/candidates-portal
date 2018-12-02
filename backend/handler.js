@@ -6,11 +6,23 @@ const { schema } = require('./src/graphql')
 
 const parseQuery = (event) => {
   return new Promise((resolve, reject) => {
-    try {
-      const result = JSON.parse(event.body).query
-      console.log(`Query: ${result}`)
 
-      resolve(result)
+    if (event.queryStringParameters) {
+      const getQuery = event.queryStringParameters.query
+      if (getQuery) {
+        resolve(getQuery)
+        return
+      }
+    }
+
+    try {
+      const postQuery = JSON.parse(event.body).query
+      if (postQuery) {
+        resolve(postQuery)
+      }
+      else {
+        reject(new Error(`Unable to find query in parameter.`))
+      }
     }
     catch (error) {
       reject(new Error(`Unable to parse request. Reason: ${error.message}`))
