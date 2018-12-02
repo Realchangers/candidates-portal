@@ -1,17 +1,7 @@
-const AWS = require('aws-sdk')
-
-let dynamoDbConfig = undefined
-if (process.env.IS_OFFLINE) {
-  dynamoDbConfig = {
-    region: 'localhost',
-    endpoint: 'http://localhost:8000'
-  }
-}
-
-const dynamoDb = new AWS.DynamoDB.DocumentClient(dynamoDbConfig)
+const { documentClient } = require('./config')
 
 module.exports.userByUserName = (parent, args) => {
-  return dynamoDb.get({
+  return documentClient().get({
     TableName: process.env.DYNAMODB_TABLE,
     Key: { 'userName': args.userName },
   }).promise()
@@ -30,7 +20,7 @@ module.exports.userByUserName = (parent, args) => {
 
 module.exports.insertUser = (parent, args) => {
   // put new user, or replace existing one
-  return dynamoDb.put({
+  return documentClient().put({
     TableName: process.env.DYNAMODB_TABLE,
     Item: {
       'userName': args.userName,
@@ -42,7 +32,7 @@ module.exports.insertUser = (parent, args) => {
 }
 
 module.exports.changeUserPassword = (parent, args) => {
-  return dynamoDb.update({
+  return documentClient().update({
     TableName: process.env.DYNAMODB_TABLE,
     Key: { 'userName': args.userName },
     UpdateExpression: 'SET password = :password',
