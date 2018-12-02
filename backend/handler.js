@@ -3,7 +3,7 @@
 const { graphql } = require('graphql')
 const { schema } = require('./src/schema')
 
-const parseQuery = (event) => {
+const parseRequestFrom = (event) => {
   switch (event.httpMethod) {
     case 'GET':
       return parseGetRequest(event)
@@ -28,7 +28,8 @@ const parseGetRequest = (event) => {
       return
     }
 
-    resolve(query)
+    const variables = event.queryStringParameters.variables
+    resolve({ query, variables })
   })
 }
 
@@ -56,13 +57,14 @@ const parsePostRequest = (event) => {
       return
     }
 
-    resolve(query)
+    const variables = parsedJSON.variables
+    resolve({ query, variables })
   })
 }
 
 module.exports.query = (event, context, callback) => {
-  parseQuery(event)
-    .then(query => graphql(schema, query))
+  parseRequestFrom(event)
+    .then(request => graphql(schema, request.query, undefined, undefined, request.variables))
     .then(
       result => callback(null, {
         statusCode: 200,
