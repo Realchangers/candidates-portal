@@ -6,18 +6,19 @@ import environment from '../../RelayEnvironment'
 
 class User extends Component {
   render() {
+    const userName = "test@gmail.com";
     return (
       <QueryRenderer
         environment={environment}
         query={graphql`
-          query UserQuery {
-            user(userName: "test@gmail.com") {
+          query UserQuery($userName: ID!) {
+            user(userName: $userName) {
               firstName
               lastName
             }
           }
       `}
-        variables={{}}
+        variables={{ userName }}
         render={({ error, props }) => {
           if (error) {
             return <div>Error! {error}</div>
@@ -26,7 +27,7 @@ class User extends Component {
             return <div>Loading...</div>
           }
           if (!props.user) {
-            return <div>Unable to find user with username 'test@gmail.com'.</div>
+            return <div>Unable to find user with username '{userName}'.</div>
           }
           return <div>Welcome {props.user.firstName} {props.user.lastName}</div>
         }}
