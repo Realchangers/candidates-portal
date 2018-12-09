@@ -3,6 +3,7 @@
     "userName": "test@gmail.com",
     "firstName": "Test",
     "lastName": "User",
+    "password": "Password123!",
     "jobOffers": [
       {
         "id": "1",
