@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import User from './components/User'
+import UserProfile from './containers/UserProfile'
 import './App.scss'
 
 class App extends Component {
   render() {
     return (
-      <User />
+      <UserProfile />
     );
   }
 }
