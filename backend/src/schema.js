@@ -5,8 +5,21 @@ const {
   GraphQLObjectType,
   GraphQLString,
   GraphQLNonNull,
-  GraphQLID
+  GraphQLID,
+  GraphQLInt,
+  GraphQLList
 } = require('graphql')
+
+const jobOfferType = new GraphQLObjectType({
+  name: 'JobOffer',
+  fields: {
+    id: { type: GraphQLID },
+    date: { type: GraphQLString },
+    title: { type: GraphQLString },
+    description: { type: GraphQLString },
+    company: { type: GraphQLString }
+  }
+})
 
 const userType = new GraphQLObjectType({
   name: 'User',
@@ -14,7 +27,15 @@ const userType = new GraphQLObjectType({
     userName: { type: GraphQLID },
     password: { type: GraphQLString },
     firstName: { type: GraphQLString },
-    lastName: { type: GraphQLString }
+    lastName: { type: GraphQLString },
+
+    jobOffers: {
+      type: new GraphQLList(jobOfferType),
+      args: {
+        first: { type: GraphQLInt }
+      },
+      resolve: service.jobOffers
+    }
   }
 })
 

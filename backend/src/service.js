@@ -41,3 +41,14 @@ module.exports.changeUserPassword = (parent, args) => {
     }
   }).promise().then(() => args.userName)
 }
+
+module.exports.jobOffers = (parent, args) => {
+  // TODO: read from database
+  return [{
+    id: "1",
+    date: "09/12/2018",
+    title: "CTO",
+    description: "Description",
+    company: "RealChangers"
+  }]
+}
