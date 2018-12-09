@@ -5,8 +5,8 @@ import { createFragmentContainer } from 'react-relay'
 
 class JobOffer extends Component {
   render() {
-    const { title, description } = this.props.offer
-    return <li>{title} - {description}</li>
+    const { title, company } = this.props.offer
+    return <li>{title} - {company}</li>
   }
 }
 
@@ -15,7 +15,7 @@ export default createFragmentContainer(
   graphql`
     fragment JobOffer_offer on JobOffer {
       title
-      description
+      company
     }
   `
 )
