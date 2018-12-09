@@ -27,28 +27,42 @@ it('should query the user correctly', () => {
     })
 })
 
-it('should create a new user correctly', () => {
-  service.insertUser.mockResolvedValueOnce('user@gmail.com')
-
-  const { schema } = require('../src/schema')
-  const query = 'mutation {createUser(userName: "user@gmail.com", password: "Password123!", firstName: "Test", lastName: "User")}'
-
-  return graphql(schema, query)
-    .then(result => {
-      expect(result.errors).toBeUndefined()
-      expect(result.data).toEqual({ "createUser": "user@gmail.com" })
-    })
-})
-
 it('should change password correctly', () => {
+
   service.changeUserPassword.mockResolvedValueOnce('user@gmail.com')
+  service.userByUserName.mockResolvedValueOnce({
+    userName: 'user@gmail.com',
+    firstName: 'Test',
+    lastName: 'User'
+  })
 
   const { schema } = require('../src/schema')
-  const query = 'mutation {changeUserPassword(userName: "user@gmail.com", password: "NewPassword!")}'
+  const query = `
+    mutation ChangeUserPaswordMutation($input: ChangePasswordInput!) {
+      changeUserPassword(input: $input) {
+        user {
+          userName
+        }
+      }
+    }
+  `
+  const variables = {
+    input: {
+      userName: "user@gmail.com",
+      currentPassword: "CurrentPassword!",
+      newPassword: "NewPassword1!"
+    }
+  }
 
-  return graphql(schema, query)
+  return graphql(schema, query, undefined, undefined, variables)
     .then(result => {
       expect(result.errors).toBeUndefined()
-      expect(result.data).toEqual({ "changeUserPassword": "user@gmail.com" })
+      expect(result.data).toEqual({
+        "changeUserPassword": {
+          "user": {
+            "userName": "user@gmail.com"
+          }
+        }
+      })
     })
 })

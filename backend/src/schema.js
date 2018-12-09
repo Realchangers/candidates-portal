@@ -10,6 +10,10 @@ const {
   GraphQLList
 } = require('graphql')
 
+const {
+  mutationWithClientMutationId
+} = require('graphql-relay')
+
 const jobOfferType = new GraphQLObjectType({
   name: 'JobOffer',
   fields: {
@@ -39,6 +43,30 @@ const userType = new GraphQLObjectType({
   }
 })
 
+const ChangePasswordMutation = mutationWithClientMutationId({
+  name: 'ChangePassword',
+  inputFields: {
+    currentPassword: { type: new GraphQLNonNull(GraphQLString) },
+    newPassword: { type: new GraphQLNonNull(GraphQLString) },
+    userName: { type: new GraphQLNonNull(GraphQLID) }
+  },
+  outputFields: {
+    user: {
+      type: userType,
+      resolve: (args) => {
+        return service.userByUserName(undefined, args)
+      }
+    }
+  },
+  mutateAndGetPayload: ({ userName, currentPassword, newPassword }) => {
+    return service.changeUserPassword(undefined, {
+      userName: userName,
+      password: newPassword
+    })
+      .then(userName => ({ userName }))
+  }
+})
+
 module.exports.schema = new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'RootQueryType',
@@ -55,24 +83,7 @@ module.exports.schema = new GraphQLSchema({
   mutation: new GraphQLObjectType({
     name: 'RootMutationType',
     fields: {
-      createUser: {
-        args: {
-          userName: { type: new GraphQLNonNull(GraphQLString) },
-          password: { type: new GraphQLNonNull(GraphQLString) },
-          firstName: { type: new GraphQLNonNull(GraphQLString) },
-          lastName: { type: new GraphQLNonNull(GraphQLString) }
-        },
-        type: GraphQLString,
-        resolve: service.insertUser
-      },
-      changeUserPassword: {
-        args: {
-          userName: { type: new GraphQLNonNull(GraphQLID) },
-          password: { type: new GraphQLNonNull(GraphQLString) }
-        },
-        type: GraphQLString,
-        resolve: service.changeUserPassword
-      }
+      changeUserPassword: ChangePasswordMutation
     }
   })
 })
