@@ -29,6 +29,10 @@ class UserProfile extends Component {
             return <div>Loading...</div>
           }
 
+          if (!props.user) {
+            return <div>Unable to find user with email: 'test@gmail.com'</div>
+          }
+
           return (
             <div>
               <div>User: {props.user.userName}</div>
