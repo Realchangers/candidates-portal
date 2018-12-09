@@ -5,10 +5,7 @@ const mutation = graphql`
   mutation ChangePasswordMutation($input: ChangePasswordInput!) {
     changeUserPassword(input: $input) {
       user {
-        userName
         password
-        firstName
-        lastName
       }
     }
   }
@@ -17,7 +14,8 @@ const mutation = graphql`
 function commit(
   environment,
   newPassword,
-  user
+  user,
+  onCompleted
 ) {
   return commitMutation(
     environment,
@@ -29,7 +27,8 @@ function commit(
           newPassword,
           userName: user.userName
         }
-      }
+      },
+      onCompleted: onCompleted
     }
   )
 }

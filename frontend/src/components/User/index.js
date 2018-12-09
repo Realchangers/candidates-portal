@@ -29,11 +29,14 @@ class User extends Component {
   handleSubmit(event) {
     event.preventDefault()
 
-    // TODO: reload form with values from server
     ChangePasswordMutation.commit(
       this.props.relay.environment,
       this.state.newPassword,
-      this.props.userDetails
+      this.props.userDetails,
+      (response) => this.setState({
+        password: response.changeUserPassword.user.password,
+        newPassword: ''
+      })
     )
   }
 
