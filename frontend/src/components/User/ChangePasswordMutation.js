@@ -24,9 +24,11 @@ function commit(
     {
       mutation,
       variables: {
-        currentPassword: user.password,
-        newPassword,
-        userName: user.userName
+        input: {
+          currentPassword: user.password,
+          newPassword,
+          userName: user.userName
+        }
       }
     }
   )
