@@ -6,11 +6,11 @@ import { createFragmentContainer } from 'react-relay';
 
 class JobOfferList extends Component {
   render() {
-    const { jobOffers: { offers } } = this.props
+    const { jobOffers } = this.props.jobOffers
     return (
       <section>
         <ul>
-          {offers.map(offer => <JobOffer key={offer.id} offer={offer} />)}
+          {jobOffers.map(offer => <JobOffer key={offer.id} offer={offer} />)}
         </ul>
       </section>
     )
