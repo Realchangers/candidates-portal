@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 import graphql from 'babel-plugin-relay/macro'
 import { createFragmentContainer } from 'react-relay'
+import ChangePasswordMutation from './ChangePasswordMutation';
 
 class User extends Component {
   constructor(props) {
@@ -26,8 +27,14 @@ class User extends Component {
   }
 
   handleSubmit(event) {
-    console.log(`Will send state to server: ${JSON.stringify(this.state)}`)
     event.preventDefault()
+
+    // TODO: reload form with values from server
+    ChangePasswordMutation.commit(
+      this.props.relay.environment,
+      this.state.newPassword,
+      this.props.userDetails
+    )
   }
 
   render() {
