@@ -7,4 +7,14 @@ type User {
   password: String
   firstName: String
   lastName: String
+
+  jobOffers(first: Int): [JobOffer]
+}
+
+type JobOffer {
+  id: ID
+  date: String
+  title: String
+  description: String
+  company: String
 }
