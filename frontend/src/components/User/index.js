@@ -1,39 +1,24 @@
 import React, { Component } from 'react'
-import graphql from 'babel-plugin-relay/macro'
-import { QueryRenderer } from 'react-relay'
 
-import environment from '../../RelayEnvironment'
+import graphql from 'babel-plugin-relay/macro'
+import { createFragmentContainer } from 'react-relay'
 
 class User extends Component {
   render() {
-    const userName = "test@gmail.com";
+    const { userName, firstName, lastName } = this.props.userDetails
     return (
-      <QueryRenderer
-        environment={environment}
-        query={graphql`
-          query UserQuery($userName: ID!) {
-            user(userName: $userName) {
-              firstName
-              lastName
-            }
-          }
-      `}
-        variables={{ userName }}
-        render={({ error, props }) => {
-          if (error) {
-            return <div>Error! {error}</div>
-          }
-          if (!props) {
-            return <div>Loading...</div>
-          }
-          if (!props.user) {
-            return <div>Unable to find user with username '{userName}'.</div>
-          }
-          return <div>Welcome {props.user.firstName} {props.user.lastName}</div>
-        }}
-      />
-    );
+      <div>Welcome {firstName} {lastName} ({userName})!</div>
+    )
   }
 }
 
-export default User
+export default createFragmentContainer(
+  User,
+  graphql`
+    fragment User_userDetails on User {
+      userName
+      firstName
+      lastName
+    }
+  `
+)

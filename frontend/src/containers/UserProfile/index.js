@@ -5,21 +5,23 @@ import graphql from 'babel-plugin-relay/macro'
 import { QueryRenderer } from 'react-relay';
 
 import environment from '../../RelayEnvironment'
+import User from '../../components/User';
 
 class UserProfile extends Component {
   render() {
+    const userName = "test@gmail.com";
     return (
       <QueryRenderer
         environment={environment}
         query={graphql`
-          query UserProfileQuery {
-            user(userName: "test@gmail.com") {
-              userName
+          query UserProfileQuery($userName: ID!) {
+            user(userName: $userName) {
+              ...User_userDetails
               ...JobOfferList_jobOffers
             }
           }
         `}
-        variables={{}}
+        variables={{ userName }}
         render={({ error, props }) => {
           if (error) {
             return <div>Unable to read data. Error: {error.message}</div>
@@ -35,7 +37,7 @@ class UserProfile extends Component {
 
           return (
             <div>
-              <div>User: {props.user.userName}</div>
+              <User userDetails={props.user} />
               <JobOfferList jobOffers={props.user} />
             </div>
           )
