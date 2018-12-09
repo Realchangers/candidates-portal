@@ -50,7 +50,7 @@ it('should not get user with wrong user name', () => {
   const args = { userName: 'test@gmail.com' }
   return service.userByUserName(undefined, args)
     .then(result => {
-      expect(result).toBeNull()
+      expect(result).toBeUndefined()
       expect(documentClientGetFn).toHaveBeenNthCalledWith(1, {
         TableName: 'test_table',
         Key: { 'userName': 'test@gmail.com' },

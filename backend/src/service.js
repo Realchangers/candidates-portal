@@ -4,18 +4,9 @@ module.exports.userByUserName = (parent, args) => {
   return documentClient().get({
     TableName: process.env.DYNAMODB_TABLE,
     Key: { 'userName': args.userName },
-  }).promise()
-    .then(result => {
-      if (result.Item) {
-        return ({
-          userName: result.Item.userName,
-          firstName: result.Item.firstName,
-          lastName: result.Item.lastName
-        })
-      }
-
-      return null
-    })
+  })
+    .promise()
+    .then(result => result.Item)
 }
 
 module.exports.insertUser = (parent, args) => {
@@ -43,7 +34,7 @@ module.exports.changeUserPassword = (parent, args) => {
 }
 
 module.exports.jobOffers = (parent, args) => {
-  // TODO: read from database
+  // TODO: read from database ...
   return [{
     id: "1",
     date: "09/12/2018",
