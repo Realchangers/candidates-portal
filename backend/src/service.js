@@ -34,12 +34,10 @@ module.exports.changeUserPassword = (parent, args) => {
 }
 
 module.exports.jobOffers = (parent, args) => {
-  // TODO: read from database ...
-  return [{
-    id: "1",
-    date: "09/12/2018",
-    title: "CTO",
-    description: "Description",
-    company: "RealChangers"
-  }]
+  const offers = parent.jobOffers
+  if (offers) {
+    return offers.slice(0, args.first)
+  }
+
+  return offers
 }

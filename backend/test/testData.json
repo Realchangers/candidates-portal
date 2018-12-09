@@ -1,7 +1,17 @@
 [
   {
     "userName": "test@gmail.com",
-    "firstName": "Aha!",
-    "lastName": "User"
+    "firstName": "Test",
+    "lastName": "User",
+    "jobOffers": [
+      {
+        "title": "CTO",
+        "company": "RealChangers"
+      },
+      {
+        "title": "Software Engineer",
+        "company": "Apple"
+      }
+    ]
   }
 ]
