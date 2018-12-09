@@ -5,10 +5,12 @@
     "lastName": "User",
     "jobOffers": [
       {
+        "id": "1",
         "title": "CTO",
         "company": "RealChangers"
       },
       {
+        "id": "2",
         "title": "Software Engineer",
         "company": "Apple"
       }
