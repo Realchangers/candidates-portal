@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom"
 
-import './App.scss'
-
 import UserProfile from './containers/UserProfile'
 import JobOffersPage from './containers/JobOffersPage';
 
