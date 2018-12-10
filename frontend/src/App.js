@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route } from "react-router-dom"
+import { BrowserRouter as Router, Route, Link } from "react-router-dom"
 
 import './App.scss'
 
-import Navigation from './components/Navigation';
 import UserProfile from './containers/UserProfile'
 import JobOffersPage from './containers/JobOffersPage';
 
@@ -12,7 +11,10 @@ class App extends Component {
     return (
       <Router>
         <div className="grid-container">
-          <Navigation />
+          <ul className="menu">
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/profile">Profile</Link></li>
+          </ul>
 
           <Route exact path="/" component={JobOffersPage} />
           <Route path="/profile" component={UserProfile} />
