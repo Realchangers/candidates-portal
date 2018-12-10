@@ -1,19 +1,24 @@
 [
   {
     "userName": "test@gmail.com",
-    "firstName": "Test",
-    "lastName": "User",
+    "firstName": "Marian",
+    "lastName": "Bouček",
     "password": "Password123!",
     "jobOffers": [
       {
         "id": "1",
-        "title": "CTO",
+        "title": "Developer",
         "company": "RealChangers"
       },
       {
         "id": "2",
         "title": "Software Engineer",
-        "company": "Apple"
+        "company": "Bulb"
+      },
+      {
+        "id": "3",
+        "title": "Junior PHP Developer",
+        "company": "Another Impact Company"
       }
     ]
   }
