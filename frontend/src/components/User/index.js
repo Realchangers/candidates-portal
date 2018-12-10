@@ -41,10 +41,10 @@ class User extends Component {
   }
 
   render() {
-    const { userName, firstName, lastName } = this.props.userDetails
+    const { firstName, lastName } = this.props.userDetails
     return (
       <div>
-        <h2>Welcome {firstName} {lastName} ({userName})!</h2>
+        <h2>{firstName} {lastName}</h2>
         <form>
           <label>
             Current Password:
@@ -65,7 +65,6 @@ export default createFragmentContainer(
   User,
   graphql`
     fragment User_userDetails on User {
-      userName
       password
       firstName
       lastName

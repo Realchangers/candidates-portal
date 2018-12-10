@@ -4,18 +4,18 @@ import { QueryRenderer } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro'
 
 import environment from '../../RelayEnvironment'
-import User from '../../components/User';
+import JobOfferList from '../../components/JobOfferList'
 
-class UserProfile extends Component {
+class JobOffersPage extends Component {
   render() {
     const userName = "test@gmail.com";
     return (
       <QueryRenderer
         environment={environment}
         query={graphql`
-          query UserProfileQuery($userName: ID!) {
+          query JobOffersPageQuery($userName: ID!) {
             user(userName: $userName) {
-              ...User_userDetails
+              ...JobOfferList_jobOffers
             }
           }
         `}
@@ -33,11 +33,11 @@ class UserProfile extends Component {
             return <div>Unable to find user with email: 'test@gmail.com'</div>
           }
 
-          return <User userDetails={props.user} />
+          return <JobOfferList jobOffers={props.user} />
         }}
       />
-    );
+    )
   }
 }
 
-export default UserProfile
+export default JobOffersPage
