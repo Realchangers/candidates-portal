@@ -8,8 +8,8 @@ class JobOffer extends Component {
     const { title, company } = this.props.offer
     return (
       <tr>
-        <td>{title}</td>
         <td>{company}</td>
+        <td>{title}</td>
       </tr>
     )
   }

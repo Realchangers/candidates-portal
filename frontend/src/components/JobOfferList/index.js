@@ -3,6 +3,7 @@ import JobOffer from '../JobOffer';
 
 import graphql from 'babel-plugin-relay/macro'
 import { createFragmentContainer } from 'react-relay';
+import Pagination from '../Pagination';
 
 class JobOfferList extends Component {
   render() {
@@ -12,13 +13,18 @@ class JobOfferList extends Component {
         <h2>Your current job offers:</h2>
         <table>
           <thead>
-            <th>Job</th>
-            <th>Company</th>
+            <tr>
+              <th width="300">Company</th>
+              <th>Job</th>
+            </tr>
           </thead>
           <tbody>
-            {jobOffers.map(offer => <JobOffer key={offer.id} offer={offer} />)}
+            {jobOffers.map(
+              offer => <JobOffer key={offer.id} offer={offer} />
+            )}
           </tbody>
         </table>
+        <Pagination />
       </section>
     )
   }
