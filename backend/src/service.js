@@ -34,10 +34,5 @@ module.exports.changeUserPassword = (parent, args) => {
 }
 
 module.exports.jobOffers = (parent, args) => {
-  const offers = parent.jobOffers
-  if (offers) {
-    return offers.slice(0, args.first)
-  }
-
-  return offers
+  return parent.jobOffers
 }

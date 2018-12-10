@@ -1,9 +1,10 @@
 const { graphql } = require('graphql')
 
+const { schema } = require('../src/schema')
 const service = require('../src/service')
 jest.mock('../src/service')
 
-it('should query the user correctly', () => {
+it('should query the user and his job offers correctly', () => {
 
   service.userByUserName.mockResolvedValueOnce({
     userName: 'user@gmail.com',
@@ -11,8 +12,25 @@ it('should query the user correctly', () => {
     lastName: 'User'
   })
 
-  const { schema } = require('../src/schema')
-  const query = 'query UserQuery { user(userName: "user@gmail.com") { userName firstName lastName  }}'
+  service.jobOffers.mockResolvedValueOnce([{
+    id: "1",
+    title: "Developer",
+    company: "Realchangers"
+  }])
+
+  const query =
+    `query UserQuery {
+      user(userName: "user@gmail.com") {
+        userName firstName lastName
+        jobOffers(first: 1) {
+          edges {
+            node {
+              id title company
+            }
+          }
+        }
+      }
+    }`
 
   return graphql(schema, query)
     .then(result => {
@@ -21,7 +39,18 @@ it('should query the user correctly', () => {
         user: {
           userName: 'user@gmail.com',
           firstName: 'Test',
-          lastName: 'User'
+          lastName: 'User',
+          jobOffers: {
+            edges: [
+              {
+                node: {
+                  id: "1",
+                  title: "Developer",
+                  company: "Realchangers"
+                }
+              }
+            ]
+          }
         }
       })
     })
@@ -36,7 +65,6 @@ it('should change password correctly', () => {
     lastName: 'User'
   })
 
-  const { schema } = require('../src/schema')
   const query = `
     mutation ChangeUserPaswordMutation($input: ChangePasswordInput!) {
       changeUserPassword(input: $input) {

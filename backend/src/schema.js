@@ -5,13 +5,14 @@ const {
   GraphQLObjectType,
   GraphQLString,
   GraphQLNonNull,
-  GraphQLID,
-  GraphQLInt,
-  GraphQLList
+  GraphQLID
 } = require('graphql')
 
 const {
-  mutationWithClientMutationId
+  connectionArgs,
+  connectionFromArray,
+  mutationWithClientMutationId,
+  connectionDefinitions
 } = require('graphql-relay')
 
 const JobOfferType = new GraphQLObjectType({
@@ -25,6 +26,14 @@ const JobOfferType = new GraphQLObjectType({
   }
 })
 
+const {
+  connectionType: JobOfferConnection,
+  edgeType: JobOfferEdgeType
+} = connectionDefinitions({
+  name: 'JobOffer',
+  nodeType: JobOfferType
+})
+
 const UserType = new GraphQLObjectType({
   name: 'User',
   fields: {
@@ -34,11 +43,14 @@ const UserType = new GraphQLObjectType({
     lastName: { type: GraphQLString },
 
     jobOffers: {
-      type: new GraphQLList(JobOfferType),
+      type: JobOfferConnection,
       args: {
-        first: { type: GraphQLInt }
+        ...connectionArgs
       },
-      resolve: service.jobOffers
+      resolve: async (parent, args) => {
+        const result = await service.jobOffers(parent)
+        return connectionFromArray(result, args)
+      }
     }
   }
 })
