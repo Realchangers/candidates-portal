@@ -36,7 +36,7 @@ class UserProfile extends Component {
           }
 
           return (
-            <div className="grid-container">
+            <div>
               <h1>Candidates Portal</h1>
               <User userDetails={props.user} />
               <JobOfferList jobOffers={props.user} />
