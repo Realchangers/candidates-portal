@@ -14,7 +14,7 @@ const {
   mutationWithClientMutationId
 } = require('graphql-relay')
 
-const jobOfferType = new GraphQLObjectType({
+const JobOfferType = new GraphQLObjectType({
   name: 'JobOffer',
   fields: {
     id: { type: GraphQLID },
@@ -25,7 +25,7 @@ const jobOfferType = new GraphQLObjectType({
   }
 })
 
-const userType = new GraphQLObjectType({
+const UserType = new GraphQLObjectType({
   name: 'User',
   fields: {
     userName: { type: GraphQLID },
@@ -34,7 +34,7 @@ const userType = new GraphQLObjectType({
     lastName: { type: GraphQLString },
 
     jobOffers: {
-      type: new GraphQLList(jobOfferType),
+      type: new GraphQLList(JobOfferType),
       args: {
         first: { type: GraphQLInt }
       },
@@ -52,10 +52,8 @@ const ChangePasswordMutation = mutationWithClientMutationId({
   },
   outputFields: {
     user: {
-      type: userType,
-      resolve: (args) => {
-        return service.userByUserName(undefined, args)
-      }
+      type: UserType,
+      resolve: (args) => service.userByUserName(undefined, args)
     }
   },
   mutateAndGetPayload: ({ userName, currentPassword, newPassword }) => {
@@ -72,7 +70,7 @@ module.exports.schema = new GraphQLSchema({
     name: 'RootQueryType',
     fields: {
       user: {
-        type: userType,
+        type: UserType,
         args: {
           userName: { type: new GraphQLNonNull(GraphQLID) }
         },
