@@ -19,6 +19,26 @@
         "id": "3",
         "title": "Junior PHP Developer",
         "company": "Another Impact Company"
+      },
+      {
+        "id": "4",
+        "title": "Technical Lead",
+        "company": "RealChangers"
+      },
+      {
+        "id": "5",
+        "title": "CTO",
+        "company": "RealChangers"
+      },
+      {
+        "id": "6",
+        "title": "Junior PHP Developer",
+        "company": "Not so great company"
+      },
+      {
+        "id": "7",
+        "title": "CEO",
+        "company": "Non-existing company"
       }
     ]
   }
