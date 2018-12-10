@@ -56,12 +56,12 @@ const ChangePasswordMutation = mutationWithClientMutationId({
       resolve: (args) => service.userByUserName(undefined, args)
     }
   },
-  mutateAndGetPayload: ({ userName, currentPassword, newPassword }) => {
-    return service.changeUserPassword(undefined, {
+  mutateAndGetPayload: async ({ userName, currentPassword, newPassword }) => {
+    const updatedPassword = await service.changeUserPassword(undefined, {
       userName: userName,
       password: newPassword
     })
-      .then(userName => ({ userName }))
+    return ({ userName: updatedPassword })
   }
 })
 
