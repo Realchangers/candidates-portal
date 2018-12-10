@@ -13,8 +13,9 @@ const mutation = graphql`
 
 function commit(
   environment,
+  currentPassword,
   newPassword,
-  user,
+  userName,
   onCompleted
 ) {
   return commitMutation(
@@ -23,9 +24,9 @@ function commit(
       mutation,
       variables: {
         input: {
-          currentPassword: user.password,
+          currentPassword: currentPassword,
           newPassword,
-          userName: user.userName
+          userName: userName
         }
       },
       onCompleted: onCompleted

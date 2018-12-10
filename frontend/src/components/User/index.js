@@ -29,10 +29,19 @@ class User extends Component {
   handleSubmit(event) {
     event.preventDefault()
 
+    const userName = this.props.userDetails.userName
+    const currentPassword = this.state.password
+    const newPassword = this.state.newPassword
+
+    if (currentPassword === '' || newPassword === '') {
+      return
+    }
+
     ChangePasswordMutation.commit(
       this.props.relay.environment,
-      this.state.newPassword,
-      this.props.userDetails,
+      currentPassword,
+      newPassword,
+      userName,
       (response) => this.setState({
         password: response.changeUserPassword.user.password,
         newPassword: ''
@@ -65,6 +74,7 @@ export default createFragmentContainer(
   User,
   graphql`
     fragment User_userDetails on User {
+      userName
       password
       firstName
       lastName
