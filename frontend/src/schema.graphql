@@ -24,7 +24,24 @@ type User {
   firstName: String
   lastName: String
 
-  jobOffers(first: Int): [JobOffer]
+  jobOffers(after: String, first: Int, before: String, last: Int): JobOfferConnection
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type JobOfferConnection {
+  pageInfo: PageInfo!
+  edges: [JobOfferEdge]
+}
+
+type JobOfferEdge {
+  node: JobOffer
+  cursor: String!
 }
 
 type JobOffer {

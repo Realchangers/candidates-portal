@@ -19,8 +19,8 @@ class JobOfferList extends Component {
             </tr>
           </thead>
           <tbody>
-            {jobOffers.map(
-              offer => <JobOffer key={offer.id} offer={offer} />
+            {jobOffers.edges.map(edge =>
+              <JobOffer key={edge.node.id} offer={edge.node} />
             )}
           </tbody>
         </table>
@@ -38,8 +38,12 @@ export default createFragmentContainer(
         first: 5
       )
       {
-        id,
-        ...JobOffer_offer
+        edges {
+          node {
+            id,
+            ...JobOffer_offer
+          }
+        }
       }
     }
   `
