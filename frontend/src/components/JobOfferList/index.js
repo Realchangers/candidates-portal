@@ -35,7 +35,7 @@ export default createFragmentContainer(
   graphql`
     fragment JobOfferList_jobOffers on User {
       jobOffers(
-        first: 2147483647  # max GraphQLInt
+        first: 5  # max GraphQLInt
       )
       {
         id,
