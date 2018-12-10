@@ -1,18 +1,20 @@
-# Bug Free Invention
+# Candidates portal
 ## What it is?
-Proof of concept for following technologies:
+Candidates portal is a web application for Realchangers candidates, who seeks new job. It allows them to create a profile and based on their interests, get the most relevant job offers from our partner companies.
+## Tools and technologies
+The application is written in JavaScript, so your main tool is:
+* `npm` - install from https://nodejs.org/
+### Frontend technology stack
 * React.js
 * Relay
-* Foundation
+* Foundation (CSS framework)
 * GraphQL
-* AWS Lambda
-* serverless.com
-* DynamoDB
 * Jest
-## Language and requirements
-* JavaScript
-* npm, yarn
-## How to run
-* follow installation procedure in `frontend` and `backend` modules
-* in `frontend`, run `yarn relay:watch` and then `yarn start` in separate terminal windows
-* in `backend`, run `yarn start`
+### Backend technology stack
+* node.js
+* serverless.com (deployment to AWS Lambda)
+* AWS SDK (for DynamoDB)
+* Jest
+## AWS Deployment Components
+* frontend - S3, CloudFront
+* backend - API Gateway, Lambda@Edge (CloudFront), DynamoDB
