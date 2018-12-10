@@ -53,7 +53,7 @@ class User extends Component {
     const { firstName, lastName } = this.props.userDetails
     return (
       <div>
-        <h2>{firstName} {lastName}</h2>
+        <h1>{firstName} {lastName}</h1>
         <form>
           <label>
             Current Password:

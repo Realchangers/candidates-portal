@@ -10,7 +10,7 @@ class JobOfferList extends Component {
     const { jobOffers } = this.props.jobOffers
     return (
       <section>
-        <h2>Your current job offers</h2>
+        <h1>Your current job offers</h1>
         <table>
           <thead>
             <tr>
