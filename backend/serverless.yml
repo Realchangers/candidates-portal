@@ -8,6 +8,7 @@ package:
     - yarn.lock
     - .dynamodb/**
     - test/**
+    - seed/**
 
 custom:
   dynamodb:
@@ -18,7 +19,7 @@ custom:
       domain:
         sources:
           - table: ${self:provider.environment.DYNAMODB_TABLE}
-            sources: [./test/testData.json]
+            sources: [./seed/users.json]
   serverless-offline:
     port: 8080
 
