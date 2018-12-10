@@ -9,7 +9,7 @@ class JobOfferList extends Component {
     const { jobOffers } = this.props.jobOffers
     return (
       <section>
-        <div>Your current job offers:</div>
+        <h2>Your current job offers:</h2>
         <ul>
           {jobOffers.map(offer => <JobOffer key={offer.id} offer={offer} />)}
         </ul>

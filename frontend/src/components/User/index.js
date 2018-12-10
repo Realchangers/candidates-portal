@@ -44,7 +44,7 @@ class User extends Component {
     const { userName, firstName, lastName } = this.props.userDetails
     return (
       <div>
-        <div>Welcome {firstName} {lastName} ({userName})!</div>
+        <h2>Welcome {firstName} {lastName} ({userName})!</h2>
         <form>
           <label>
             Current Password:
@@ -54,7 +54,7 @@ class User extends Component {
             New Password:
             <input type="text" value={this.state.newPassword} onChange={this.handleInputChange} name="newPassword" />
           </label>
-          <input type="submit" value="Submit" onClick={this.handleSubmit} />
+          <input type="submit" value="Submit" className="hollow success button" onClick={this.handleSubmit} />
         </form>
       </div>
     )
