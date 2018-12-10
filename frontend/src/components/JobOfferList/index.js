@@ -10,9 +10,15 @@ class JobOfferList extends Component {
     return (
       <section>
         <h2>Your current job offers:</h2>
-        <ul>
-          {jobOffers.map(offer => <JobOffer key={offer.id} offer={offer} />)}
-        </ul>
+        <table>
+          <thead>
+            <th>Job</th>
+            <th>Company</th>
+          </thead>
+          <tbody>
+            {jobOffers.map(offer => <JobOffer key={offer.id} offer={offer} />)}
+          </tbody>
+        </table>
       </section>
     )
   }

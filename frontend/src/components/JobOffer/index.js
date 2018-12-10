@@ -6,7 +6,12 @@ import { createFragmentContainer } from 'react-relay'
 class JobOffer extends Component {
   render() {
     const { title, company } = this.props.offer
-    return <li>{title} - {company}</li>
+    return (
+      <tr>
+        <td>{title}</td>
+        <td>{company}</td>
+      </tr>
+    )
   }
 }
 
