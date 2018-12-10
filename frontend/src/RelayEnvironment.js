@@ -3,9 +3,9 @@ import {
   Network,
   RecordSource,
   Store,
-} from 'relay-runtime';
+} from 'relay-runtime'
 
-function fetchQuery(operation, variables, ) {
+function fetchQuery(operation, variables) {
   return fetch(process.env.REACT_APP_GRAPHQL_QUERY_URL, {
     method: 'POST',
     headers: {
@@ -15,14 +15,12 @@ function fetchQuery(operation, variables, ) {
       query: operation.text,
       variables,
     }),
-  }).then(response => {
-    return response.json();
-  });
+  }).then(response => response.json())
 }
 
 const environment = new Environment({
   network: Network.create(fetchQuery),
   store: new Store(new RecordSource()),
-});
+})
 
-export default environment;
+export default environment
