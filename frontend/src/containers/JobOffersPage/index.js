@@ -33,7 +33,12 @@ class JobOffersPage extends Component {
             return <div>Unable to find user with email: 'test@gmail.com'</div>
           }
 
-          return <JobOfferList jobOffers={props.user} />
+          return (
+            <section>
+              <h1>Your current job offers</h1>
+              <JobOfferList jobOffers={props.user} />
+            </section>
+          )
         }}
       />
     )
