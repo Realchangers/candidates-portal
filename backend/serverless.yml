@@ -11,19 +11,6 @@ package:
     - seed/**
     - handler.test.js
 
-custom:
-  dynamodb:
-    start:
-      migrate: true
-      seed: true
-    seed:
-      domain:
-        sources:
-          - table: ${self:provider.environment.DYNAMODB_TABLE}
-            sources: [./seed/users.json]
-  serverless-offline:
-    port: 8080
-
 provider:
   name: aws
   runtime: nodejs8.10
@@ -50,10 +37,6 @@ functions:
           path: query
           method: get
 
-plugins:
-  - serverless-dynamodb-local
-  - serverless-offline # must be last plugin
-
 resources:
   Description: Candidates Portal - Backend
   Resources:
@@ -70,3 +53,20 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         TableName: ${self:provider.environment.DYNAMODB_TABLE}
+
+plugins:
+  - serverless-dynamodb-local
+  - serverless-offline # must be last plugin
+
+custom:
+  dynamodb:
+    start:
+      migrate: true
+      seed: true
+    seed:
+      domain:
+        sources:
+          - table: ${self:provider.environment.DYNAMODB_TABLE}
+            sources: [./seed/users.json]
+  serverless-offline:
+    port: 8080
