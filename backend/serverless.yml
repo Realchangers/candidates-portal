@@ -1,4 +1,4 @@
-service: web-react-app-backend
+service: candidates-portal-backend
 
 package:
   exclude:
@@ -28,6 +28,8 @@ provider:
   name: aws
   runtime: nodejs8.10
   region: eu-west-2
+  versionFunctions: false
+  logRetentionInDays: 30
   environment:
     DYNAMODB_TABLE: ${self:service}-${self:provider.stage}
   iamRoleStatements:
@@ -53,6 +55,7 @@ plugins:
   - serverless-offline # must be last plugin
 
 resources:
+  Description: Candidates Portal - Backend
   Resources:
     UsersTable:
       Type: 'AWS::DynamoDB::Table'
