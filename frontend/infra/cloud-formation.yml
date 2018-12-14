@@ -1,0 +1,8 @@
+Description: Web React App - Frontend
+
+Resources:
+  # S3
+  FrontendBucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: boucekm-web-react-app
