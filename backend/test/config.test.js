@@ -13,5 +13,5 @@ it('should create AWS DocumentClient correctly for production environment', () =
 
   const client = config.documentClient()
   expect(client).toBeDefined()
-  expect(client.service.endpoint.href).toBe('https://dynamodb.eu-west-1.amazonaws.com/')
+  expect(client.service.endpoint.href).toBe('https://dynamodb.eu-west-2.amazonaws.com/')
 })
