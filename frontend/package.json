@@ -8,7 +8,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "relay": "relay-compiler --src ./src --schema ./src/schema.graphql",
-    "relay:watch": "relay-compiler --watch --src ./src --schema ./src/schema.graphql"
+    "relay:watch": "relay-compiler --watch --src ./src --schema ./src/schema.graphql",
+    "deploy": "aws s3 --region  sync ./build s3://boucekm-web-react-app --delete --only-show-errors"
   },
   "dependencies": {
     "foundation-sites": "^6.5.1",
