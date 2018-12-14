@@ -5,8 +5,19 @@ import graphql from 'babel-plugin-relay/macro'
 import { createPaginationContainer } from 'react-relay';
 
 class JobOfferList extends Component {
+
   render() {
     const { jobOffers } = this.props.jobOffers
+
+    let moreButton = undefined
+    if (this.props.relay.hasMore()) {
+      moreButton = <button className="button"
+        onClick={() => this._loadMoreData()}
+        aria-label="Load more jobs">
+        More...
+        </button>
+    }
+
     return (
       <div>
         <table>
@@ -22,37 +33,20 @@ class JobOfferList extends Component {
             )}
           </tbody>
         </table>
-        <nav aria-label="Pagination">
-          <ul className="pagination">
-            <li className="pagination-previous">
-              <button onClick={() => this._loadPreviousPage()} aria-label="Previous page">
-                Previous <span className="show-for-sr">page</span>
-              </button>
-            </li>
-            <li className="pagination-next">
-              <button onClick={() => this._loadNextPage()} aria-label="Next page">
-                Next <span className="show-for-sr">page</span>
-              </button>
-            </li>
-          </ul>
-        </nav>
+        {moreButton}
       </div>
     )
   }
 
-  _loadPreviousPage() {
-    // ...
-    console.log('Load previous page not yet implemented.')
-  }
-
-  // TODO: only loads more data, doesn't display only current page
-  _loadNextPage() {
+  _loadMoreData() {
     if (!this.props.relay.hasMore() || this.props.relay.isLoading()) {
       return
     }
 
     this.props.relay.loadMore(5, error => {
-      console.log(`Unable to load more items. Error: ${error}`)
+      if (error) {
+        console.log(`Unable to load more items. Error: ${error}`)
+      }
     })
   }
 }
@@ -84,9 +78,7 @@ export default createPaginationContainer(
   {
     direction: 'forward',
     getConnectionFromProps(props) {
-      const result = props.jobOffers && props.jobOffers.jobOffers
-      console.log(`Connection from props: ${JSON.stringify(result)}`)
-      return result
+      return props.jobOffers && props.jobOffers.jobOffers
     },
     getVariables(props, { count, cursor }, fragmentVariables) {
       return {
