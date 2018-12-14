@@ -5,4 +5,7 @@ Resources:
   FrontendBucket:
     Type: 'AWS::S3::Bucket'
     Properties:
+      AccessControl: PublicRead
       BucketName: boucekm-web-react-app
+      WebsiteConfiguration:
+        IndexDocument: index.html
