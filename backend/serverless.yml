@@ -9,6 +9,7 @@ package:
     - .dynamodb/**
     - test/**
     - seed/**
+    - handler.test.js
 
 custom:
   dynamodb:
@@ -26,6 +27,7 @@ custom:
 provider:
   name: aws
   runtime: nodejs8.10
+  region: eu-west-2
   environment:
     DYNAMODB_TABLE: ${self:service}-${self:provider.stage}
   iamRoleStatements:
