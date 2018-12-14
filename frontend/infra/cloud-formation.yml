@@ -6,6 +6,6 @@ Resources:
     Type: 'AWS::S3::Bucket'
     Properties:
       AccessControl: PublicRead
-      BucketName: boucekm-web-react-app
+      BucketName: boucekm-candidates-portal-frontend
       WebsiteConfiguration:
         IndexDocument: index.html
