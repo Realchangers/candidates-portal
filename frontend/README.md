@@ -14,3 +14,4 @@ Frontend is implemented in React and Relay using Foundation as CSS framework. It
 * **eject** - ejects from create-react-application framework (one time operation)
 * **relay** - compiles GraphQL schema
 * **relay:watch** - same as `relay`, but in watch mode
+* **deploy** - deploys application into AWS
