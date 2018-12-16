@@ -68,10 +68,18 @@ module.exports.query = (event, context, callback) => {
     .then(
       result => callback(null, {
         statusCode: 200,
+        headers: {
+          "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+          "Access-Control-Allow-Credentials": true // Required for cookies, authorization headers with HTTPS
+        },
         body: JSON.stringify(result)
       }),
       error => callback(null, {
         statusCode: 500,
+        headers: {
+          "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+          "Access-Control-Allow-Credentials": true // Required for cookies, authorization headers with HTTPS
+        },
         body: JSON.stringify({ errors: [{ message: error.message }] })
       })
     )
