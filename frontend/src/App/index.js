@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom"
 
-import ProfilePage from './Profile/ProfilePage'
-import JobOffersPage from './JobOffers/JobOffersPage';
+import ProfilePage from '../Profile/ProfilePage'
+import JobOffersPage from '../JobOffers/JobOffersPage';
 
 class App extends Component {
   render() {
