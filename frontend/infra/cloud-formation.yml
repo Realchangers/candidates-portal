@@ -28,6 +28,10 @@ Resources:
     Properties:
       DistributionConfig:
         Comment: Candidates Portal
+        CustomErrorResponses:
+          - ErrorCode: 403
+            ResponseCode: 200
+            ResponsePagePath: /index.html # for React Router
         Enabled: true
         DefaultRootObject: index.html
         DefaultCacheBehavior:
