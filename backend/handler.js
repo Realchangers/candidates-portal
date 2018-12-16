@@ -62,25 +62,22 @@ const parsePostRequest = (event) => {
   })
 }
 
+const responseFromCodeAndBody = (code, body) => {
+  return ({
+    statusCode: code,
+    headers: {
+      "Access-Control-Allow-Origin": process.env.BACKEND_URL,
+      "Access-Control-Allow-Credentials": true
+    },
+    body: JSON.stringify(body)
+  })
+}
+
 module.exports.query = (event, context, callback) => {
   parseRequestFrom(event)
     .then(request => graphql(schema, request.query, undefined, undefined, request.variables))
     .then(
-      result => callback(null, {
-        statusCode: 200,
-        headers: {
-          "Access-Control-Allow-Origin": "*", // Required for CORS support to work
-          "Access-Control-Allow-Credentials": true // Required for cookies, authorization headers with HTTPS
-        },
-        body: JSON.stringify(result)
-      }),
-      error => callback(null, {
-        statusCode: 500,
-        headers: {
-          "Access-Control-Allow-Origin": "*", // Required for CORS support to work
-          "Access-Control-Allow-Credentials": true // Required for cookies, authorization headers with HTTPS
-        },
-        body: JSON.stringify({ errors: [{ message: error.message }] })
-      })
+      result => callback(null, responseFromCodeAndBody(200, result)),
+      error => callback(null, responseFromCodeAndBody(500, { errors: [{ message: error.message }] }))
     )
 }

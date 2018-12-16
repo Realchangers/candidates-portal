@@ -17,14 +17,15 @@ provider:
   region: eu-west-2
   versionFunctions: false
   logRetentionInDays: 30
-  environment:
-    DYNAMODB_TABLE: ${self:service}-${self:provider.stage}
   iamRoleStatements:
    - Effect: Allow
      Action:
       - dynamodb:GetItem
       - dynamodb:UpdateItem
      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
+  environment:
+    DYNAMODB_TABLE: ${self:service}-${self:provider.stage}
+    BACKEND_URL: https://d1mk09wyuvsm4a.cloudfront.net
 
 functions:
   query:
@@ -33,9 +34,15 @@ functions:
       - http:
           path: query
           method: post
+          cors:
+            origin: ${self:provider.environment.BACKEND_URL}
+            maxAge: 86400
       - http:
           path: query
           method: get
+          cors:
+            origin: ${self:provider.environment.BACKEND_URL}
+            maxAge: 86400
 
 resources:
   Description: Candidates Portal - Backend
