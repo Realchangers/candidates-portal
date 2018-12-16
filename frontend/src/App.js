@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom"
 
-import UserProfile from './containers/UserProfile'
-import JobOffersPage from './containers/JobOffersPage';
+import ProfilePage from './Profile/ProfilePage'
+import JobOffersPage from './JobOffers/JobOffersPage';
 
 class App extends Component {
   render() {
@@ -15,7 +15,7 @@ class App extends Component {
           </ul>
 
           <Route exact path="/" component={JobOffersPage} />
-          <Route path="/profile" component={UserProfile} />
+          <Route path="/profile" component={ProfilePage} />
         </div >
       </Router >
     )

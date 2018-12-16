@@ -2,7 +2,7 @@ import graphql from 'babel-plugin-relay/macro'
 import { commitMutation } from 'react-relay';
 
 const mutation = graphql`
-  mutation ChangePasswordMutation($input: ChangePasswordInput!) {
+  mutation ProfileChangePasswordMutation($input: ChangePasswordInput!) {
     changeUserPassword(input: $input) {
       user {
         password

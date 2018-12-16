@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import JobOffer from '../JobOffer';
+import JobOfferRow from './JobOfferRow';
 
 import graphql from 'babel-plugin-relay/macro'
 import { createPaginationContainer } from 'react-relay';
@@ -29,7 +29,7 @@ class JobOfferList extends Component {
           </thead>
           <tbody>
             {jobOffers.edges.map(edge =>
-              <JobOffer key={edge.node.id} offer={edge.node} />
+              <JobOfferRow key={edge.node.id} offer={edge.node} />
             )}
           </tbody>
         </table>
@@ -68,7 +68,7 @@ export default createPaginationContainer(
           edges {
             node {
               id
-              ...JobOffer_offer
+              ...JobOfferRow_offer
             }
           }
         }

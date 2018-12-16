@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import graphql from 'babel-plugin-relay/macro'
 import { createFragmentContainer } from 'react-relay'
 
-class JobOffer extends Component {
+class JobOfferRow extends Component {
   render() {
     const { title, company } = this.props.offer
     return (
@@ -16,9 +16,9 @@ class JobOffer extends Component {
 }
 
 export default createFragmentContainer(
-  JobOffer,
+  JobOfferRow,
   graphql`
-    fragment JobOffer_offer on JobOffer {
+    fragment JobOfferRow_offer on JobOffer {
       title
       company
     }

@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-
 import graphql from 'babel-plugin-relay/macro'
 import { createFragmentContainer } from 'react-relay'
-import ChangePasswordMutation from './ChangePasswordMutation';
 
-class User extends Component {
+import ProfileChangePasswordMutation from './ProfileChangePasswordMutation';
+
+class ProfileComponent extends Component {
   constructor(props) {
     super(props)
 
@@ -37,7 +37,7 @@ class User extends Component {
       return
     }
 
-    ChangePasswordMutation.commit(
+    ProfileChangePasswordMutation.commit(
       this.props.relay.environment,
       currentPassword,
       newPassword,
@@ -71,9 +71,9 @@ class User extends Component {
 }
 
 export default createFragmentContainer(
-  User,
+  ProfileComponent,
   graphql`
-    fragment User_userDetails on User {
+    fragment ProfileComponent_userDetails on User {
       userName
       password
       firstName
