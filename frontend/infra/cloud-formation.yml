@@ -7,5 +7,46 @@ Resources:
     Properties:
       AccessControl: PublicRead
       BucketName: boucekm-candidates-portal-frontend
-      WebsiteConfiguration:
-        IndexDocument: index.html
+  FrontendBucketPolicy:
+    Type: 'AWS::S3::BucketPolicy'
+    DependsOn: [ FrontendBucket, CloudFrontIdentity ]
+    Properties:
+      Bucket: !Ref FrontendBucket
+      PolicyDocument:
+        Statement:
+          -
+            Action: [ 's3:GetObject' ]
+            Effect: 'Allow'
+            Resource: !Sub '${FrontendBucket.Arn}/*'
+            Principal:
+              AWS: !Sub 'arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${CloudFrontIdentity}'
+
+  # CloudFront
+  CloudFrontDistribution:
+    Type: 'AWS::CloudFront::Distribution'
+    DependsOn: [ FrontendBucket ]
+    Properties:
+      DistributionConfig:
+        Comment: Candidates Portal
+        Enabled: true
+        DefaultRootObject: index.html
+        DefaultCacheBehavior:
+          Compress: true
+          ForwardedValues:
+            QueryString: false
+          ViewerProtocolPolicy: redirect-to-https
+          TargetOriginId: !Sub S3-${FrontendBucket}
+        HttpVersion: http2
+        PriceClass: PriceClass_100 # PriceClass_All on production
+        ViewerCertificate:
+          CloudFrontDefaultCertificate: true
+        Origins:
+          - Id: !Sub S3-${FrontendBucket}
+            DomainName: !GetAtt FrontendBucket.DomainName
+            S3OriginConfig:
+              OriginAccessIdentity: !Sub 'origin-access-identity/cloudfront/${CloudFrontIdentity}'
+  CloudFrontIdentity:
+    Type: 'AWS::CloudFront::CloudFrontOriginAccessIdentity'
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: Candidates Portal origin access identity
