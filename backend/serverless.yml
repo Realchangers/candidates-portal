@@ -25,7 +25,7 @@ provider:
      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
   environment:
     DYNAMODB_TABLE: ${self:service}-${self:provider.stage}
-    BACKEND_URL: https://d1mk09wyuvsm4a.cloudfront.net
+    FRONTEND_URL: https://d1mk09wyuvsm4a.cloudfront.net
 
 functions:
   query:
@@ -35,13 +35,13 @@ functions:
           path: query
           method: post
           cors:
-            origin: ${self:provider.environment.BACKEND_URL}
+            origin: ${self:provider.environment.FRONTEND_URL}
             maxAge: 86400
       - http:
           path: query
           method: get
           cors:
-            origin: ${self:provider.environment.BACKEND_URL}
+            origin: ${self:provider.environment.FRONTEND_URL}
             maxAge: 86400
 
 resources:

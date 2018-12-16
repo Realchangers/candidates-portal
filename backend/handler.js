@@ -66,7 +66,7 @@ const responseFromCodeAndBody = (code, body) => {
   return ({
     statusCode: code,
     headers: {
-      "Access-Control-Allow-Origin": process.env.BACKEND_URL,
+      "Access-Control-Allow-Origin": process.env.FRONTEND_URL,
       "Access-Control-Allow-Credentials": true
     },
     body: JSON.stringify(body)
