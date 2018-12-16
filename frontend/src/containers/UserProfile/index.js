@@ -30,7 +30,7 @@ class UserProfile extends Component {
           }
 
           if (!props.user) {
-            return <div>Unable to find user with email: 'test@gmail.com'</div>
+            return <div>Unable to find user with email: '{userName}'</div>
           }
 
           return <User userDetails={props.user} />
