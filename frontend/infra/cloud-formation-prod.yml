@@ -5,8 +5,7 @@ Resources:
   FrontendBucket:
     Type: 'AWS::S3::Bucket'
     Properties:
-      AccessControl: PublicRead
-      BucketName: boucekm-candidates-portal-frontend
+      BucketName: boucekm-candidates-portal-prod-frontend
   FrontendBucketPolicy:
     Type: 'AWS::S3::BucketPolicy'
     DependsOn: [ FrontendBucket, CloudFrontIdentity ]
