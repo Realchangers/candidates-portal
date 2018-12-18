@@ -1,11 +1,24 @@
 import React, { Component } from 'react'
 
-import RouterComponent from './RouterComponent';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom"
+
+import ProfilePage from '../Profile/ProfilePage'
+import JobOffersPage from '../JobOffers/JobOffersPage';
 
 class App extends Component {
   render() {
     return (
-      <RouterComponent />
+      <Router>
+        <div className="grid-container">
+          <ul className="menu">
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/profile">Profile</Link></li>
+          </ul>
+
+          <Route exact path="/" component={JobOffersPage} />
+          <Route exact path="/profile" component={ProfilePage} />
+        </div >
+      </Router>
     )
   }
 }
