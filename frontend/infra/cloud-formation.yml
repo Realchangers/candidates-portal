@@ -36,6 +36,7 @@ Resources:
         DefaultRootObject: index.html
         DefaultCacheBehavior:
           Compress: true
+          DefaultTTL: 3600
           ForwardedValues:
             QueryString: false
           ViewerProtocolPolicy: redirect-to-https
