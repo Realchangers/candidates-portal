@@ -1,5 +1,11 @@
 import React, { Component } from 'react'
 
+import {
+  CognitoUserPool,
+  CognitoUser,
+  AuthenticationDetails
+} from 'amazon-cognito-identity-js';
+
 class AuthenticationComponent extends Component {
 
   constructor(props) {
@@ -68,7 +74,34 @@ class AuthenticationComponent extends Component {
     event.preventDefault()
 
     const { username, password } = this.state
-    console.log(`Going to do login with username=${username}, password: ${password}`)
+    if (!username || !password) {
+      return
+    }
+
+    const authenticationDetails = new AuthenticationDetails({
+      Username: username,
+      Password: password
+    })
+
+    const userPool = new CognitoUserPool({
+      UserPoolId: process.env.REACT_APP_COGNITO_USER_POOL_ID,
+      ClientId: process.env.REACT_APP_COGNITO_CLIENT_ID
+    })
+
+    const cognitoUser = new CognitoUser({
+      Username: username,
+      Pool: userPool
+    })
+
+    cognitoUser.authenticateUser(authenticationDetails, {
+      onSuccess: (session, userConfirmationNecessary) => {
+        const accessToken = session.getAccessToken().getJwtToken()
+        console.log(`Successfully logged in. JWT token is: ${accessToken}, userConfirmationNecessary: ${userConfirmationNecessary}`)
+      },
+      onFailure: (error) => {
+        console.log(`Unable to log in. Error: ${JSON.stringify(error)}`)
+      }
+    })
   }
 }
 
