@@ -18,9 +18,24 @@ class AuthenticationComponent extends Component {
 
     this.handleLogin = this.handleLogin.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
+    this.handleHideMessage = this.handleHideMessage.bind(this)
   }
 
   render() {
+    let callout = undefined
+    if (this.state.cognitoResponse) {
+      const stateClass = this.state.cognitoResponse.isError ? 'callout alert' : 'callout success'
+      const responseMessage = this.state.cognitoResponse.message
+      callout =
+        <div className={stateClass}>
+          <h5>Response from Cognito</h5>
+          <p>{responseMessage}</p>
+          <button className="close-button" aria-label="Dismiss alert" type="button" onClick={this.handleHideMessage}>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+    }
+
     return (
       <form>
         <div className="grid-container">
@@ -49,6 +64,11 @@ class AuthenticationComponent extends Component {
           </div>
           <div className="grid-x grid-padding-x">
             <div className="medium-6 cell">
+              {callout}
+            </div>
+          </div>
+          <div className="grid-x grid-padding-x">
+            <div className="medium-6 cell">
               <button type="submit"
                 className="button success"
                 onClick={this.handleLogin}>
@@ -59,6 +79,12 @@ class AuthenticationComponent extends Component {
         </div>
       </form>
     )
+  }
+
+  handleHideMessage() {
+    this.setState({
+      cognitoResponse: undefined
+    })
   }
 
   handleInputChange(event) {
@@ -97,9 +123,20 @@ class AuthenticationComponent extends Component {
       onSuccess: (session, userConfirmationNecessary) => {
         const accessToken = session.getAccessToken().getJwtToken()
         console.log(`Successfully logged in. JWT token is: ${accessToken}, userConfirmationNecessary: ${userConfirmationNecessary}`)
+        this.setState({
+          cognitoResponse: {
+            isError: false,
+            message: 'Successfully logged in!'
+          }
+        })
       },
       onFailure: (error) => {
-        console.log(`Unable to log in. Error: ${JSON.stringify(error)}`)
+        this.setState({
+          cognitoResponse: {
+            isError: true,
+            message: `Unable to log in. Response from Cognito: ${error.message}`
+          }
+        })
       }
     })
   }
