@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import { withAuthenticator } from 'aws-amplify-react'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom"
 
 import ProfilePage from '../Profile/ProfilePage'
@@ -23,4 +23,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default withAuthenticator(App)
