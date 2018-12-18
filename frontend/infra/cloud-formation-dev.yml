@@ -1,0 +1,12 @@
+Description: Candidates Portal Dev - Frontend
+
+Resources:
+  # S3
+  FrontendBucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      AccessControl: PublicRead
+      BucketName: boucekm-candidates-portal-dev-frontend
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: index.html
