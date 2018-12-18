@@ -12,6 +12,7 @@
     "deploy": "aws s3 sync ./build s3://boucekm-candidates-portal-frontend --delete --only-show-errors"
   },
   "dependencies": {
+    "aws-amplify": "^1.1.17",
     "foundation-sites": "^6.5.1",
     "node-sass": "^4.10.0",
     "react": "^16.6.3",
