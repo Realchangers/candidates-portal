@@ -24,12 +24,16 @@ class AuthenticationComponent extends Component {
   render() {
     let callout = undefined
     if (this.state.cognitoResponse) {
-      const stateClass = this.state.cognitoResponse.isError ? 'callout alert' : 'callout success'
-      const responseMessage = this.state.cognitoResponse.message
+
+      const { isError, message } = this.state.cognitoResponse
+
+      const heading = isError ? 'Error response from Cognito' : 'Success response from Cognito'
+      const stateClass = isError ? 'callout alert' : 'callout success'
+
       callout =
         <div className={stateClass}>
-          <h5>Response from Cognito</h5>
-          <p>{responseMessage}</p>
+          <h5>{heading}</h5>
+          <p>{message}</p>
           <button className="close-button" aria-label="Dismiss alert" type="button" onClick={this.handleHideMessage}>
             <span aria-hidden="true">&times;</span>
           </button>
@@ -122,11 +126,10 @@ class AuthenticationComponent extends Component {
     cognitoUser.authenticateUser(authenticationDetails, {
       onSuccess: (session, userConfirmationNecessary) => {
         const accessToken = session.getAccessToken().getJwtToken()
-        console.log(`Successfully logged in. JWT token is: ${accessToken}, userConfirmationNecessary: ${userConfirmationNecessary}`)
         this.setState({
           cognitoResponse: {
             isError: false,
-            message: 'Successfully logged in!'
+            message: `JWT token: ${accessToken}, userConfirmationNecessary: ${userConfirmationNecessary}`
           }
         })
       },
@@ -134,7 +137,7 @@ class AuthenticationComponent extends Component {
         this.setState({
           cognitoResponse: {
             isError: true,
-            message: `Unable to log in. Response from Cognito: ${error.message}`
+            message: error.message
           }
         })
       }
