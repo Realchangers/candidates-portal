@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "aws-amplify": "^1.1.17",
+    "aws-amplify-react": "^2.2.4",
     "foundation-sites": "^6.5.1",
     "node-sass": "^4.10.0",
     "react": "^16.6.3",
