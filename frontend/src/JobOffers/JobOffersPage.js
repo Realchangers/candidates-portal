@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { QueryRenderer } from 'react-relay';
+import { QueryRenderer } from 'react-relay'
 import graphql from 'babel-plugin-relay/macro'
 
 import environment from '../RelayEnvironment'
@@ -29,7 +29,7 @@ class JobOffersPage extends Component {
           }
 
           if (!props.currentUser) {
-            return <div>Unable to find user with email: 'test@gmail.com'</div>
+            return <div>Unable to find current user.</div>
           }
 
           return (
