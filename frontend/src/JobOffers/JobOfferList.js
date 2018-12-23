@@ -84,16 +84,15 @@ export default createPaginationContainer(
       return {
         count,
         cursor,
-        userName: fragmentVariables.userName
+        id: fragmentVariables.id
       }
     },
     query: graphql`
       query JobOfferListQuery(
         $count: Int!
         $cursor: String
-        $userName: ID!
       ) {
-        user: user(userName: $userName) {
+        user: currentUser {
           ...JobOfferList_jobOffers @arguments(count: $count, cursor: $cursor)
         }
       }
