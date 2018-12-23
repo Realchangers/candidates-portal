@@ -62,7 +62,8 @@ const parsePostRequest = (event) => {
   })
 }
 
-const responseFromCodeAndBody = (code, body) => {
+const responseFromCodeAndBody = (body) => {
+  const code = body.errors ? 500 : 200
   return ({
     statusCode: code,
     headers: {
@@ -77,7 +78,7 @@ module.exports.query = (event, context, callback) => {
   parseRequestFrom(event)
     .then(request => graphql(schema, request.query, undefined, undefined, request.variables))
     .then(
-      result => callback(null, responseFromCodeAndBody(200, result)),
-      error => callback(null, responseFromCodeAndBody(500, { errors: [{ message: error.message }] }))
+      result => callback(null, responseFromCodeAndBody(result)),
+      error => callback(null, responseFromCodeAndBody({ errors: [{ message: error.message }] }))
     )
 }
