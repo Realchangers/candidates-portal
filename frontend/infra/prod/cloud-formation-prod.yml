@@ -5,7 +5,7 @@ Resources:
   FrontendBucket:
     Type: 'AWS::S3::Bucket'
     Properties:
-      BucketName: boucekm-candidates-portal-prod-frontend
+      BucketName: realchangers-candidates-portal-prod-frontend
   FrontendBucketPolicy:
     Type: 'AWS::S3::BucketPolicy'
     DependsOn: [ FrontendBucket, CloudFrontIdentity ]

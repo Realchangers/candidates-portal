@@ -6,7 +6,7 @@ Resources:
     Type: 'AWS::S3::Bucket'
     Properties:
       AccessControl: PublicRead
-      BucketName: boucekm-candidates-portal-dev-frontend
+      BucketName: realchangers-candidates-portal-dev-frontend
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: index.html
