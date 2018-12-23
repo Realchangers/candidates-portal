@@ -1,4 +1,5 @@
 const config = require('../src/config')
+const AWS = require('aws-sdk')
 
 it('should create AWS DocumentClient correctly for local environment', () => {
   process.env.IS_OFFLINE = true
@@ -9,7 +10,11 @@ it('should create AWS DocumentClient correctly for local environment', () => {
 })
 
 it('should create AWS DocumentClient correctly for production environment', () => {
+
   process.env.IS_OFFLINE = false
+  AWS.config = {
+    region: 'eu-west-2'
+  }
 
   const client = config.documentClient()
   expect(client).toBeDefined()
