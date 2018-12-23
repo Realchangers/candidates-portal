@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Auth } from 'aws-amplify'
 
-class UserProfileComponent extends Component {
+class AccountComponent extends Component {
 
   constructor(props) {
     super(props)
@@ -175,4 +175,4 @@ class UserProfileComponent extends Component {
   }
 }
 
-export default UserProfileComponent
+export default AccountComponent
