@@ -34,13 +34,18 @@ const {
   nodeType: JobOfferType
 })
 
+const UserProfileType = new GraphQLObjectType({
+  name: 'UserProfile',
+  fields: {
+    location: { type: GraphQLString }
+  }
+})
+
 const UserType = new GraphQLObjectType({
   name: 'User',
   fields: {
-    userName: { type: GraphQLID },
-    password: { type: GraphQLString },
-    firstName: { type: GraphQLString },
-    lastName: { type: GraphQLString },
+    id: { type: GraphQLID },
+    profile: { type: UserProfileType },
 
     jobOffers: {
       type: JobOfferConnection,
@@ -81,11 +86,8 @@ module.exports.schema = new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
-      user: {
+      currentUser: {
         type: UserType,
-        args: {
-          userName: { type: new GraphQLNonNull(GraphQLID) }
-        },
         resolve: service.userByUserName
       }
     }

@@ -3,7 +3,7 @@ const { documentClient } = require('./config')
 module.exports.userByUserName = (parent, args) => {
   return documentClient().get({
     TableName: process.env.DYNAMODB_TABLE,
-    Key: { 'userName': args.userName },
+    Key: { 'userName': 'test@gmail.com' }, // TODO: read from Cognito
   })
     .promise()
     .then(result => result.Item)
