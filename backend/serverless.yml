@@ -14,7 +14,7 @@ package:
 provider:
   name: aws
   runtime: nodejs8.10
-  region: eu-west-2
+  region: eu-west-1
   versionFunctions: false
   logRetentionInDays: 30
   iamRoleStatements:
@@ -24,8 +24,8 @@ provider:
       - dynamodb:UpdateItem
      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
   environment:
-    DYNAMODB_TABLE: ${self:service}-${self:provider.stage}
-    FRONTEND_URL: http://boucekm-candidates-portal-${self:provider.stage}-frontend.s3-website.eu-west-2.amazonaws.com
+    DYNAMODB_TABLE: candidates-portal-${self:provider.stage}
+    FRONTEND_URL: http://realchangers-candidates-portal-${self:provider.stage}-frontend.s3-website.eu-west-1.amazonaws.com
 
 functions:
   query:
