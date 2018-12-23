@@ -9,8 +9,8 @@
     "eject": "react-scripts eject",
     "relay": "relay-compiler --src ./src --schema ./src/schema.graphql",
     "relay:watch": "relay-compiler --watch --src ./src --schema ./src/schema.graphql",
-    "deploy": "aws s3 sync ./build s3://boucekm-candidates-portal-dev-frontend --acl public-read --delete --only-show-errors",
-    "deploy:prod": "aws s3 sync ./build s3://boucekm-candidates-portal-prod-frontend --delete --only-show-errors"
+    "deploy": "aws s3 sync ./build s3://realchangers-candidates-portal-dev-frontend --acl public-read --delete --only-show-errors",
+    "deploy:prod": "aws s3 sync ./build s3://realchangers-candidates-portal-prod-frontend --delete --only-show-errors"
   },
   "dependencies": {
     "aws-amplify": "^1.1.17",
