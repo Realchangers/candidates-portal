@@ -75,10 +75,21 @@ const responseFromCodeAndBody = (body) => {
   })
 }
 
-module.exports.query = (event, context, callback) => {
+const cognitoIdentityFromEvent = (event) => {
+  if (event.isOffline) {
+    // serverless-offline plugin provides custom, fixed value
+    // this can be customised via HTTP header 'cognito-identity-id' (if running in offline mode)
+    return event.requestContext.identity.cognitoIdentityId
+  }
+  else {
+    return event.requestContext.authorizer.claims["cognito:username"]
+  }
+}
+
+module.exports.query = (event, _context, callback) => {
 
   const contextValue = {
-    cognitoIdentityId: event.requestContext.authorizer.claims["cognito:username"]
+    cognitoIdentityId: cognitoIdentityFromEvent(event)
   }
 
   parseRequestFrom(event)
