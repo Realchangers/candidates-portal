@@ -21,7 +21,7 @@ module.exports.updateUserProfile = (location) => {
         'location': location
       }
     },
-    ReturnValues: "ALL_NEW"
+    ReturnValues: "UPDATED_NEW"
   }).promise().then((result) => {
     return result.Attributes
   })
