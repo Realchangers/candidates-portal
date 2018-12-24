@@ -1,38 +1,28 @@
 const { documentClient } = require('./config')
 
-module.exports.userByUserName = (parent, args) => {
+const id = '45d7c1e0-4770-4fc8-97ca-f707c5e6b841' // TODO: read the ID from Cognito
+
+module.exports.currentUser = (parent, args) => {
   return documentClient().get({
     TableName: process.env.DYNAMODB_TABLE,
-    Key: { 'userName': 'test@gmail.com' }, // TODO: read from Cognito
+    Key: { 'id': id },
   })
     .promise()
     .then(result => result.Item)
 }
 
-module.exports.insertUser = (parent, args) => {
-  // put new user, or replace existing one
-  return documentClient().put({
-    TableName: process.env.DYNAMODB_TABLE,
-    Item: {
-      'userName': args.userName,
-      'password': args.password,
-      'firstName': args.firstName,
-      'lastName': args.lastName
-    }
-  }).promise().then(() => args.userName)
-}
-
-module.exports.changeUserPassword = (parent, args) => {
+module.exports.updateUserProfile = (location) => {
   return documentClient().update({
     TableName: process.env.DYNAMODB_TABLE,
-    Key: { 'userName': args.userName },
-    UpdateExpression: 'SET password = :password',
+    Key: { 'id': id },
+    UpdateExpression: 'SET profile = :updatedProfile',
     ExpressionAttributeValues: {
-      ':password': args.password
-    }
-  }).promise().then(() => args.userName)
-}
-
-module.exports.jobOffers = (parent, args) => {
-  return parent.jobOffers
+      ':updatedProfile': {
+        'location': location
+      }
+    },
+    ReturnValues: "ALL_NEW"
+  }).promise().then((result) => {
+    return result.Attributes
+  })
 }

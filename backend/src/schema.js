@@ -4,7 +4,6 @@ const {
   GraphQLSchema,
   GraphQLObjectType,
   GraphQLString,
-  GraphQLNonNull,
   GraphQLID
 } = require('graphql')
 
@@ -52,33 +51,21 @@ const UserType = new GraphQLObjectType({
       args: {
         ...connectionArgs
       },
-      resolve: async (parent, args) => {
-        const result = await service.jobOffers(parent)
-        return connectionFromArray(result, args)
-      }
+      resolve: (parent, args) => connectionFromArray(parent.jobOffers, args)
     }
   }
 })
 
-const ChangePasswordMutation = mutationWithClientMutationId({
-  name: 'ChangePassword',
+const UserProfileMutation = mutationWithClientMutationId({
+  name: 'UserProfile',
   inputFields: {
-    currentPassword: { type: new GraphQLNonNull(GraphQLString) },
-    newPassword: { type: new GraphQLNonNull(GraphQLString) },
-    userName: { type: new GraphQLNonNull(GraphQLID) }
+    location: { type: GraphQLString }
   },
   outputFields: {
-    user: {
-      type: UserType,
-      resolve: (args) => service.userByUserName(undefined, args)
-    }
+    profile: { type: UserProfileType }
   },
-  mutateAndGetPayload: async ({ userName, currentPassword, newPassword }) => {
-    const updatedPassword = await service.changeUserPassword(undefined, {
-      userName: userName,
-      password: newPassword
-    })
-    return ({ userName: updatedPassword })
+  mutateAndGetPayload: async ({ location }) => {
+    return await service.updateUserProfile(location)
   }
 })
 
@@ -88,14 +75,14 @@ module.exports.schema = new GraphQLSchema({
     fields: {
       currentUser: {
         type: UserType,
-        resolve: service.userByUserName
+        resolve: service.currentUser
       }
     }
   }),
   mutation: new GraphQLObjectType({
     name: 'RootMutationType',
     fields: {
-      changeUserPassword: ChangePasswordMutation
+      updateUserProfile: UserProfileMutation
     }
   })
 })
