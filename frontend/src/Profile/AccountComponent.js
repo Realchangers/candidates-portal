@@ -47,8 +47,6 @@ class AccountComponent extends Component {
           }
         }
 
-        console.log(`Will update state: ${state}`)
-
         this.setState(state)
       }))
   }
