@@ -34,12 +34,16 @@ functions:
       - http:
           path: query
           method: post
+          authorizer:
+            arn: arn:aws:cognito-idp:eu-west-1:222582984103:userpool/eu-west-1_hVc5GjCPH
           cors:
             origin: ${self:provider.environment.FRONTEND_URL}
             maxAge: 86400
       - http:
           path: query
           method: get
+          authorizer:
+            arn: arn:aws:cognito-idp:eu-west-1:222582984103:userpool/eu-west-1_hVc5GjCPH
           cors:
             origin: ${self:provider.environment.FRONTEND_URL}
             maxAge: 86400
