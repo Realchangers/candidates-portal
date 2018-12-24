@@ -25,7 +25,7 @@ provider:
      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
   environment:
     DYNAMODB_TABLE: candidates-portal-${self:provider.stage}
-    FRONTEND_URL: http://realchangers-candidates-portal-${self:provider.stage}-frontend.s3-website.eu-west-1.amazonaws.com
+    FRONTEND_URL: http://realchangers-candidates-portal-${self:provider.stage}-frontend.s3-website-eu-west-1.amazonaws.com
 
 functions:
   query:
