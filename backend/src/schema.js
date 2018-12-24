@@ -64,8 +64,8 @@ const UserProfileMutation = mutationWithClientMutationId({
   outputFields: {
     profile: { type: UserProfileType }
   },
-  mutateAndGetPayload: async ({ location }) => {
-    return await service.updateUserProfile(location)
+  mutateAndGetPayload: async ({ location }, context) => {
+    return await service.updateUserProfile(location, context)
   }
 })
 

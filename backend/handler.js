@@ -75,8 +75,13 @@ const responseFromCodeAndBody = (body) => {
 }
 
 module.exports.query = (event, context, callback) => {
+
+  const contextValue = {
+    cognitoIdentityId: event.requestContext.identity.cognitoIdentityId
+  }
+
   parseRequestFrom(event)
-    .then(request => graphql(schema, request.query, undefined, undefined, request.variables))
+    .then(request => graphql(schema, request.query, undefined, contextValue, request.variables))
     .then(
       result => callback(null, responseFromCodeAndBody(result)),
       error => callback(null, responseFromCodeAndBody({ errors: [{ message: error.message }] }))

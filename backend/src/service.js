@@ -1,20 +1,18 @@
 const { documentClient } = require('./config')
 
-const id = '45d7c1e0-4770-4fc8-97ca-f707c5e6b841' // TODO: read the ID from Cognito
-
-module.exports.currentUser = (parent, args) => {
+module.exports.currentUser = (_source, _args, context) => {
   return documentClient().get({
     TableName: process.env.DYNAMODB_TABLE,
-    Key: { 'id': id },
+    Key: { 'id': context.cognitoIdentityId },
   })
     .promise()
     .then(result => result.Item)
 }
 
-module.exports.updateUserProfile = (location) => {
+module.exports.updateUserProfile = (location, context) => {
   return documentClient().update({
     TableName: process.env.DYNAMODB_TABLE,
-    Key: { 'id': id },
+    Key: { 'id': context.cognitoIdentityId },
     UpdateExpression: 'SET profile = :updatedProfile',
     ExpressionAttributeValues: {
       ':updatedProfile': {
