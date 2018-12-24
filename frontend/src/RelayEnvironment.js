@@ -12,7 +12,7 @@ function fetchQuery(operation, variables) {
     .then(session => fetch(process.env.REACT_APP_GRAPHQL_QUERY_URL, {
       method: 'POST',
       headers: {
-        'Authentication': session.getIdToken().getJwtToken(),
+        'Authorization': session.getIdToken().getJwtToken(),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
