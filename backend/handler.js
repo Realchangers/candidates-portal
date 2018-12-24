@@ -67,6 +67,7 @@ const responseFromCodeAndBody = (body) => {
   return ({
     statusCode: code,
     headers: {
+      "Access-Control-Allow-Headers": 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent',
       "Access-Control-Allow-Origin": process.env.FRONTEND_URL,
       "Access-Control-Allow-Credentials": true
     },
@@ -77,7 +78,7 @@ const responseFromCodeAndBody = (body) => {
 module.exports.query = (event, context, callback) => {
 
   const contextValue = {
-    cognitoIdentityId: event.requestContext.identity.cognitoIdentityId
+    cognitoIdentityId: event.requestContext.authorizer.claims["cognito:username"]
   }
 
   parseRequestFrom(event)
