@@ -71,11 +71,11 @@ class AccountComponent extends Component {
     }
 
     return (
-      <div>
-        <h3>User details</h3>
+      <div className="medium-6 cell">
+        <h3>Cognito profile</h3>
         <form>
-          <div className="grid-x grid-padding-x">
-            <div className="medium-6 cell">
+          <div className="grid-x">
+            <div className="medium-10 cell">
               <label>
                 Given name
                 <input type="text" name="given_name" placeholder="John" autoComplete="first-name"
@@ -83,8 +83,8 @@ class AccountComponent extends Component {
               </label>
             </div>
           </div>
-          <div className="grid-x grid-padding-x">
-            <div className="medium-6 cell">
+          <div className="grid-x">
+            <div className="medium-10 cell">
               <label>
                 Family name
                 <input type="text" name="family_name" placeholder="Doe" autoComplete="family-name"
@@ -92,8 +92,8 @@ class AccountComponent extends Component {
               </label>
             </div>
           </div>
-          <div className="grid-x grid-padding-x">
-            <div className="medium-6 cell">
+          <div className="grid-x">
+            <div className="medium-10 cell">
               <label>
                 Email
                 <input type="text" name="email" placeholder="john@doe.com" autoComplete="email"
@@ -101,17 +101,17 @@ class AccountComponent extends Component {
               </label>
             </div>
           </div>
-          <div className="grid-x grid-padding-x">
-            <div className="medium-6 cell">
+          <div className="grid-x">
+            <div className="medium-10 cell">
               {callout}
             </div>
           </div>
-          <div className="grid-x grid-padding-x">
-            <div className="medium-6 cell">
+          <div className="grid-x">
+            <div className="medium-10 cell">
               <button type="submit"
                 className="button success"
                 onClick={this.handleLogin}>
-                Save to Cognito
+                Save in Cognito
               </button>
             </div>
           </div>

@@ -51,14 +51,18 @@ class UserProfileComponent extends Component {
 
   render() {
     return (
-      <div>
-        <h2>User profile</h2>
+      <div className="medium-6 cell">
+        <h3>Database profile</h3>
         <form>
           <label>
             Location:
-            <input type="text" value={this.state.location} onChange={this.handleInputChange} name="location" />
+            <input type="text"
+              name="location"
+              value={this.state.location}
+              onChange={this.handleInputChange}
+              placeholder="London" />
           </label>
-          <input type="submit" value="Submit" className="hollow success button" onClick={this.handleSubmit} />
+          <input type="submit" value="Save in DynamoDB" className="success button" onClick={this.handleSubmit} />
         </form>
       </div>
     )
