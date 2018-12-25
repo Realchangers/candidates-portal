@@ -51,7 +51,7 @@ const UserType = new GraphQLObjectType({
       args: {
         ...connectionArgs
       },
-      resolve: (parent, args) => connectionFromArray(parent.jobOffers, args)
+      resolve: (parent, args) => parent.jobOffers ? connectionFromArray(parent.jobOffers, args) : null
     }
   }
 })
