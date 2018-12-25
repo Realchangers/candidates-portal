@@ -77,8 +77,8 @@ const responseFromCodeAndBody = (body) => {
 
 const cognitoIdentityFromEvent = (event) => {
   if (event.isOffline) {
-    // serverless-offline plugin provides custom, fixed value
-    // this can be customised via HTTP header 'cognito-identity-id' (if running in offline mode)
+    // serverless-offline plugin provides custom, fixed value for Cognito Identity ID
+    // it can be further customised via HTTP header 'cognito-identity-id'
     return event.requestContext.identity.cognitoIdentityId
   }
   else {
