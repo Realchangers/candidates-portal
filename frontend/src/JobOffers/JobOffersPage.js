@@ -28,14 +28,19 @@ class JobOffersPage extends Component {
             return <div>Loading...</div>
           }
 
-          if (!props.currentUser) {
-            return <div>Unable to find current user.</div>
+          let jobOffersComponent
+          if (props.currentUser && props.currentUser.jobOffers) {
+            jobOffersComponent = <JobOfferList jobOffers={props.currentUser} />
+
+          }
+          else {
+            jobOffersComponent = <div>You have currently no job offers. Please check again later!</div>
           }
 
           return (
             <section>
               <h1>Your current job offers</h1>
-              <JobOfferList jobOffers={props.currentUser} />
+              {jobOffersComponent}
             </section>
           )
         }}

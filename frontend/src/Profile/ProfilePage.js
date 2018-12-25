@@ -29,10 +29,6 @@ class ProfilePage extends Component {
             return <div>Loading...</div>
           }
 
-          if (!props.currentUser) {
-            return <div>Unable to find current user.</div>
-          }
-
           return (
             <div>
               <h1>Profile</h1>
