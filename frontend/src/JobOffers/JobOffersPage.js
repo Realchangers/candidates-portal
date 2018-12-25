@@ -14,7 +14,7 @@ class JobOffersPage extends Component {
         query={graphql`
           query JobOffersPageQuery {
             currentUser {
-              ...JobOfferList_jobOffers
+              ...JobOfferList_currentUser
             }
           }
         `}
@@ -28,19 +28,10 @@ class JobOffersPage extends Component {
             return <div>Loading...</div>
           }
 
-          let jobOffersComponent
-          if (props.currentUser && props.currentUser.jobOffers) {
-            jobOffersComponent = <JobOfferList jobOffers={props.currentUser} />
-
-          }
-          else {
-            jobOffersComponent = <div>You have currently no job offers. Please check again later!</div>
-          }
-
           return (
             <section>
               <h1>Your current job offers</h1>
-              {jobOffersComponent}
+              <JobOfferList currentUser={props.currentUser} />
             </section>
           )
         }}

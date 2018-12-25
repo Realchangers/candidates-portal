@@ -7,7 +7,14 @@ import { createPaginationContainer } from 'react-relay';
 class JobOfferList extends Component {
 
   render() {
-    const { jobOffers } = this.props.jobOffers
+    let jobOffers
+    if (this.props.currentUser) {
+      jobOffers = this.props.currentUser.jobOffers
+    }
+
+    if (!jobOffers) {
+      return <div>You have currently no job offers. Please check again later!</div>
+    }
 
     let moreButton = undefined
     if (this.props.relay.hasMore()) {
@@ -54,8 +61,8 @@ class JobOfferList extends Component {
 export default createPaginationContainer(
   JobOfferList,
   {
-    jobOffers: graphql`
-      fragment JobOfferList_jobOffers on User
+    currentUser: graphql`
+      fragment JobOfferList_currentUser on User
       @argumentDefinitions(
         count: {type: "Int", defaultValue: 5}
         cursor: {type: "String"}
@@ -78,7 +85,7 @@ export default createPaginationContainer(
   {
     direction: 'forward',
     getConnectionFromProps(props) {
-      return props.jobOffers && props.jobOffers.jobOffers
+      return props.currentUser && props.currentUser.jobOffers
     },
     getVariables(props, { count, cursor }, fragmentVariables) {
       return {
@@ -93,7 +100,7 @@ export default createPaginationContainer(
         $cursor: String
       ) {
         user: currentUser {
-          ...JobOfferList_jobOffers @arguments(count: $count, cursor: $cursor)
+          ...JobOfferList_currentUser @arguments(count: $count, cursor: $cursor)
         }
       }
     `
