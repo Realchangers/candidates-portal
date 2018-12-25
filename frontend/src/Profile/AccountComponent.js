@@ -78,7 +78,7 @@ class AccountComponent extends Component {
             <div className="medium-10 cell">
               <label>
                 Given name
-                <input type="text" name="given_name" placeholder="John" autoComplete="first-name"
+                <input type="text" name="given_name" placeholder="John" autoComplete="given-name"
                   value={this.state.given_name} onChange={this.handleInputChange} />
               </label>
             </div>
@@ -96,7 +96,7 @@ class AccountComponent extends Component {
             <div className="medium-10 cell">
               <label>
                 Email
-                <input type="text" name="email" placeholder="john@doe.com" autoComplete="email"
+                <input type="email" name="email" placeholder="john@doe.com" autoComplete="email"
                   value={this.state.email} onChange={this.handleInputChange} />
               </label>
             </div>
