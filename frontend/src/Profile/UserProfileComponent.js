@@ -60,8 +60,9 @@ class UserProfileComponent extends Component {
               name="location"
               value={this.state.location}
               onChange={this.handleInputChange}
-              placeholder="London" />
+              placeholder="Remotely" />
           </label>
+          <p className="help-text">Tell us where would you like to ideally work.</p>
           <input type="submit" value="Save in DynamoDB" className="success button" onClick={this.handleSubmit} />
         </form>
       </div>
