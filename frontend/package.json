@@ -10,7 +10,8 @@
     "relay": "relay-compiler --src ./src --schema ./src/schema.graphql",
     "relay:watch": "relay-compiler --watch --src ./src --schema ./src/schema.graphql",
     "deploy": "aws s3 sync ./build s3://realchangers-candidates-portal-dev-frontend --acl public-read --delete --only-show-errors",
-    "deploy:prod": "aws s3 sync ./build s3://realchangers-candidates-portal-prod-frontend --delete --only-show-errors"
+    "deploy:prod": "aws s3 sync ./build s3://realchangers-candidates-portal-prod-frontend --delete --only-show-errors",
+    "storybook": "start-storybook -p 9001 -c .storybook"
   },
   "dependencies": {
     "aws-amplify": "^1.1.17",
@@ -24,8 +25,12 @@
     "react-scripts": "2.1.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@storybook/react": "^4.1.3",
+    "babel-loader": "^8.0.4",
     "babel-plugin-relay": "^1.7.0",
     "graphql": "^14.0.2",
+    "react-storybooks-relay-container": "^1.2.2",
     "react-test-renderer": "^16.6.3",
     "relay-compiler": "^1.7.0"
   },

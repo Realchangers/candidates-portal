@@ -9,16 +9,22 @@ class AccountComponent extends Component {
     this.state = {
       given_name: '',
       family_name: '',
-      email: ''
+      email: '',
+      ...props.initialState
     }
 
-    this.handleLogin = this.handleLogin.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleHideMessage = this.handleHideMessage.bind(this)
     this.updateUserAttributes = this.updateUserAttributes.bind(this)
   }
 
   componentDidMount() {
+    // skip real call, if running in Storybook
+    if (this.state.storybook) {
+      return
+    }
+
     Auth.currentAuthenticatedUser()
       .catch(error => this.setState({
         cognitoResponse: {
@@ -110,7 +116,7 @@ class AccountComponent extends Component {
             <div className="medium-10 cell">
               <button type="submit"
                 className="button success"
-                onClick={this.handleLogin}>
+                onClick={this.handleSubmit}>
                 Save in Cognito
               </button>
             </div>
@@ -135,7 +141,7 @@ class AccountComponent extends Component {
     })
   }
 
-  handleLogin(event) {
+  handleSubmit(event) {
     event.preventDefault()
 
     const { given_name, family_name, email } = this.state
