@@ -27,7 +27,7 @@ class JobOfferList extends Component {
 
     return (
       <div>
-        <table>
+        <table className="hover">
           <thead>
             <tr>
               <th>Company</th>
