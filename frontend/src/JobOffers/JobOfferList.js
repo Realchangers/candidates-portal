@@ -50,7 +50,7 @@ class JobOfferList extends Component {
       return
     }
 
-    this.props.relay.loadMore(5, error => {
+    this.props.relay.loadMore(50, error => {
       if (error) {
         console.log(`Unable to load more items. Error: ${error}`)
       }
