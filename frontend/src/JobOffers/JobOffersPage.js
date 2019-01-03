@@ -24,7 +24,7 @@ class JobOffersPage extends Component {
             return <div>Unable to read data. Error: {error.message}</div>
           }
 
-          let currentUser
+          let currentUser = null
           if (props) {
             currentUser = props.currentUser
           }
