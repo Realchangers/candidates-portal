@@ -8,19 +8,24 @@ class UserProfileComponent extends Component {
   constructor(props) {
     super(props)
 
-    let location = ''
-    if (this.props.currentUser) {
-      if (this.props.currentUser.profile) {
-        location = this.props.currentUser.profile.location
-      }
-    }
-
-    this.state = {
-      location: location
-    }
+    this.state = { location: '' }
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentWillReceiveProps(newProps) {
+
+    let location = ''
+    if (newProps.currentUser) {
+      if (newProps.currentUser.profile) {
+        location = newProps.currentUser.profile.location
+      }
+    }
+
+    this.setState({
+      location: location
+    })
   }
 
   handleInputChange(event) {

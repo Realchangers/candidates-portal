@@ -25,8 +25,9 @@ class ProfilePage extends Component {
             return <div>Unable to read profile. Error: {error.message}</div>
           }
 
-          if (!props) {
-            return <div>Loading...</div>
+          let currentUser = null
+          if (props) {
+            currentUser = props.currentUser
           }
 
           return (
@@ -34,7 +35,7 @@ class ProfilePage extends Component {
               <h1>Profile</h1>
               <div className="grid-x">
                 <AccountComponent />
-                <UserProfileComponent currentUser={props.currentUser} />
+                <UserProfileComponent currentUser={currentUser} />
               </div>
             </div>
           )
