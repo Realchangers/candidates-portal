@@ -20,7 +20,7 @@ module.exports.updateUserProfile = (location, context) => {
       }
     },
     ReturnValues: "UPDATED_NEW"
-  }).promise().then((result) => {
-    return result.Attributes
   })
+    .promise()
+    .then(result => result.Attributes)
 }
