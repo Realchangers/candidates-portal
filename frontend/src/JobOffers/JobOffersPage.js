@@ -24,14 +24,15 @@ class JobOffersPage extends Component {
             return <div>Unable to read data. Error: {error.message}</div>
           }
 
-          if (!props) {
-            return <div>Loading...</div>
+          let currentUser
+          if (props) {
+            currentUser = props.currentUser
           }
 
           return (
             <section>
               <h1>Your current job offers</h1>
-              <JobOfferList currentUser={props.currentUser} />
+              <JobOfferList currentUser={currentUser} />
             </section>
           )
         }}

@@ -7,13 +7,15 @@ import { createPaginationContainer } from 'react-relay';
 class JobOfferList extends Component {
 
   render() {
+
     let jobOffers
     if (this.props.currentUser) {
       jobOffers = this.props.currentUser.jobOffers
     }
-
-    if (!jobOffers) {
-      return <div>You have currently no job offers. Please check again later!</div>
+    else {
+      jobOffers = {
+        edges: []
+      }
     }
 
     let moreButton = undefined
