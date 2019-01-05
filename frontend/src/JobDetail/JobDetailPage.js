@@ -24,11 +24,12 @@ class JobDetailPage extends Component {
           return <div>Unable to read data. Error: {error.message}</div>
         }
 
-        if (!props) {
+        if (props) {
+          return <JobDetail jobOffer={props.currentUser.jobOffer} />
+        }
+        else {
           return <div></div>
         }
-
-        return <JobDetail jobOffer={props.currentUser.jobOffer} />
       }}
     />
   }
