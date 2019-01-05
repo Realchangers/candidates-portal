@@ -3,7 +3,8 @@ import { withAuthenticator } from 'aws-amplify-react'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom"
 
 import ProfilePage from '../Profile/ProfilePage'
-import JobOffersPage from '../JobOffers/JobOffersPage';
+import JobOffersPage from '../JobOffers/JobOffersPage'
+import JobDetailPage from '../JobDetail/JobDetailPage'
 
 class App extends Component {
   render() {
@@ -17,6 +18,7 @@ class App extends Component {
 
           <Route exact path="/" component={JobOffersPage} />
           <Route exact path="/profile" component={ProfilePage} />
+          <Route path="/job/:jobID" component={JobDetailPage} />
         </div >
       </Router>
     )
