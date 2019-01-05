@@ -27,8 +27,7 @@ const JobOfferType = new GraphQLObjectType({
 })
 
 const {
-  connectionType: JobOfferConnection,
-  edgeType: JobOfferEdgeType
+  connectionType: JobOfferConnection
 } = connectionDefinitions({
   name: 'JobOffer',
   nodeType: JobOfferType
@@ -72,9 +71,7 @@ const UserProfileMutation = mutationWithClientMutationId({
   outputFields: {
     profile: { type: UserProfileType }
   },
-  mutateAndGetPayload: async ({ location }, context) => {
-    return await service.updateUserProfile(location, context)
-  }
+  mutateAndGetPayload: ({ location }, context) => service.updateUserProfile(location, context)
 })
 
 module.exports.schema = new GraphQLSchema({
@@ -83,7 +80,7 @@ module.exports.schema = new GraphQLSchema({
     fields: {
       currentUser: {
         type: UserType,
-        resolve: service.currentUser
+        resolve: (_source, _args, context) => service.currentUser(context)
       }
     }
   }),

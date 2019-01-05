@@ -1,6 +1,6 @@
 const { documentClient } = require('./config')
 
-module.exports.currentUser = (_source, _args, context) => {
+module.exports.currentUser = (context) => {
   return documentClient.get({
     TableName: process.env.DYNAMODB_TABLE,
     Key: { 'id': context.cognitoIdentityId },
