@@ -32,8 +32,8 @@ class JobOfferList extends Component {
         <table className="hover">
           <thead>
             <tr>
-              <th>Company</th>
-              <th>Position</th>
+              <th width="50%">Company</th>
+              <th width="50%">Position</th>
             </tr>
           </thead>
           <tbody>
