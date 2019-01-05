@@ -1,12 +1,15 @@
 const { documentClient } = require('./config')
 
 module.exports.currentUser = (_source, _args, context) => {
-  return documentClient().get({
+  return documentClient().query({
     TableName: process.env.DYNAMODB_TABLE,
-    Key: { 'id': context.cognitoIdentityId },
+    KeyConditionExpression: 'id = :userID',
+    ExpressionAttributeValues: {
+      ':userID': context.cognitoIdentityId
+    }
   })
     .promise()
-    .then(result => result.Item)
+    .then(result => result.Items.length === 1 ? result.Items[0] : null)
 }
 
 module.exports.updateUserProfile = (location, context) => {
