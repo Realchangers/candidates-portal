@@ -1,42 +1,34 @@
 import React, { Component } from 'react'
-
 import { QueryRenderer } from 'react-relay'
 import graphql from 'babel-plugin-relay/macro'
 
 import environment from '../RelayEnvironment'
+import JobDetail from './JobDetail'
 
 class JobDetailPage extends Component {
-
   render() {
-    const jobID = this.props.match.params.jobID
     return <QueryRenderer
       environment={environment}
       query={graphql`
         query JobDetailPageQuery($jobID: ID!) {
           currentUser {
             jobOffer(id: $jobID) {
-              title, company, description
+              ...JobDetail_jobOffer
             }
           }
         }
       `}
-      variables={{ jobID }}
+      variables={{ jobID: this.props.match.params.jobID }}
       render={({ error, props }) => {
         if (error) {
           return <div>Unable to read data. Error: {error.message}</div>
         }
 
-        let jobOffer = {}
-        if (props) {
-          jobOffer = props.currentUser.jobOffer
+        if (!props) {
+          return <div></div>
         }
 
-        return (
-          <div>
-            <h1>{jobOffer.title} - {jobOffer.company}</h1>
-            <div>{jobOffer.description}</div>
-          </div>
-        )
+        return <JobDetail jobOffer={props.currentUser.jobOffer} />
       }}
     />
   }

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import graphql from 'babel-plugin-relay/macro'
 import { createFragmentContainer } from 'react-relay'
 
-import UserProfileMutation from './UserProfileMutation';
+import UserProfileMutation from './UserProfileMutation'
 
 class UserProfileComponent extends Component {
   constructor(props) {
