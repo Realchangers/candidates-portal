@@ -4,7 +4,8 @@ const {
   GraphQLSchema,
   GraphQLObjectType,
   GraphQLString,
-  GraphQLID
+  GraphQLID,
+  GraphQLNonNull
 } = require('graphql')
 
 const {
@@ -52,6 +53,13 @@ const UserType = new GraphQLObjectType({
         ...connectionArgs
       },
       resolve: (parent, args) => parent.jobOffers ? connectionFromArray(parent.jobOffers, args) : null
+    },
+    jobOffer: {
+      type: JobOfferType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) }
+      },
+      resolve: (parent, args) => parent.jobOffers.find((offer) => offer.id === args.id)
     }
   }
 })

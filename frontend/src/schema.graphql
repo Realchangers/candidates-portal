@@ -6,6 +6,7 @@ type User {
   id: ID!
   profile: UserProfile
   jobOffers(after: String, first: Int, before: String, last: Int): JobOfferConnection
+  jobOffer(id: ID!): JobOffer
 }
 
 type UserProfile {
