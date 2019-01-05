@@ -5,37 +5,44 @@
       {
         "id": "1",
         "title": "Developer",
-        "company": "RealChangers"
+        "company": "RealChangers",
+        "description": "Lorem ipsum..."
       },
       {
         "id": "2",
         "title": "Software Engineer",
-        "company": "Bulb"
+        "company": "Bulb",
+        "description": "Lorem ipsum..."
       },
       {
         "id": "3",
         "title": "Junior PHP Developer",
-        "company": "Bulb"
+        "company": "Bulb",
+        "description": "Lorem ipsum..."
       },
       {
         "id": "4",
         "title": "Technical Lead",
-        "company": "RealChangers"
+        "company": "RealChangers",
+        "description": "Lorem ipsum..."
       },
       {
         "id": "5",
         "title": "CTO",
-        "company": "RealChangers"
+        "company": "RealChangers",
+        "description": "Lorem ipsum..."
       },
       {
         "id": "6",
         "title": "Junior PHP Developer",
-        "company": "Not so great company"
+        "company": "Not so great company",
+        "description": "Lorem ipsum..."
       },
       {
         "id": "7",
         "title": "CEO",
-        "company": "Non-existing company"
+        "company": "Non-existing company",
+        "description": "Lorem ipsum..."
       }
     ]
   }
