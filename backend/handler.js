@@ -88,14 +88,21 @@ const cognitoIdentityFromEvent = (event) => {
 
 module.exports.query = (event, _context, callback) => {
 
+  const cognitoIdentityId = cognitoIdentityFromEvent(event)
   const contextValue = {
-    cognitoIdentityId: cognitoIdentityFromEvent(event)
+    cognitoIdentityId
   }
 
   parseRequestFrom(event)
-    .then(request => graphql(schema, request.query, undefined, contextValue, request.variables))
+    .then(request => {
+      console.log(`Request - Cognito:username=${cognitoIdentityId}, query=${request.query}, variables=${JSON.stringify(request.variables)}`)
+      return graphql(schema, request.query, undefined, contextValue, request.variables)
+    })
     .then(
       result => callback(null, responseFromCodeAndBody(result)),
-      error => callback(null, responseFromCodeAndBody({ errors: [{ message: error.message }] }))
+      error => {
+        console.error(`Error response - Cognito:username=${cognitoIdentityId}`, error)
+        callback(null, responseFromCodeAndBody({ errors: [{ message: 'Internal Server Error' }] }))
+      }
     )
 }
