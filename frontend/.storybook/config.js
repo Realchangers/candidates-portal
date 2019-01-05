@@ -6,6 +6,7 @@ function loadStories() {
   require('../stories/AccountStory')
   require('../stories/UserProfileStory')
   // require('../stories/JobOffersListStory')
+  require('../stories/JobDetailStory')
 }
 
 configure(loadStories, module)
