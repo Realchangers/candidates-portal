@@ -1,6 +1,10 @@
-import { configure } from '@storybook/react'
+import { configure, addDecorator } from '@storybook/react'
 
 import '../src/index.scss'
+
+import StoryRouterDecorator from './StoryRouterDecorator'
+
+addDecorator(StoryRouterDecorator())
 
 function loadStories() {
   require('../stories/AccountStory')
