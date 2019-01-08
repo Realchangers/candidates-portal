@@ -8,24 +8,28 @@ class UserProfileComponent extends Component {
   constructor(props) {
     super(props)
 
-    this.state = { location: '' }
+    // read initial state from props, if provided (by Storybook)
+    this.state = { location: this._locationFromProps(props) }
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  // component starts with empty props and then it receives props later
+  // (so it basically receives props 2 times)
   componentWillReceiveProps(newProps) {
+    this.setState({
+      location: this._locationFromProps(newProps)
+    })
+  }
 
-    let location = ''
-    if (newProps.currentUser) {
-      if (newProps.currentUser.profile) {
-        location = newProps.currentUser.profile.location
+  _locationFromProps(props) {
+    if (props.currentUser) {
+      if (props.currentUser.profile) {
+        return props.currentUser.profile.location
       }
     }
-
-    this.setState({
-      location: location
-    })
+    return ''
   }
 
   handleInputChange(event) {

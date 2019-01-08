@@ -10,12 +10,12 @@ storiesOf('Database profile', module)
     return <StubContainer Component={UserProfileComponent} props={props} />
   })
   .add('Prague location', () => {
-    const props = {
+    const initialState = {
       currentUser: {
         profile: {
           location: "Prague"
         }
       }
     }
-    return <StubContainer Component={UserProfileComponent} props={props} />
+    return <StubContainer Component={UserProfileComponent} props={initialState} />
   })
