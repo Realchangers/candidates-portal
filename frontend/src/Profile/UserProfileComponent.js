@@ -8,11 +8,11 @@ class UserProfileComponent extends Component {
   constructor(props) {
     super(props)
 
-    // read initial state from props, if provided (by Storybook)
+    // reads initial state from props, if provided (by Storybook)
     this.state = { location: this._locationFromProps(props) }
 
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleInputChange = this._handleInputChange.bind(this);
+    this.handleSubmit = this._handleSubmit.bind(this);
   }
 
   // component starts with empty props and then it receives props later
@@ -32,7 +32,7 @@ class UserProfileComponent extends Component {
     return ''
   }
 
-  handleInputChange(event) {
+  _handleInputChange(event) {
     const value = event.target.value
     const name = event.target.name
 
@@ -41,7 +41,7 @@ class UserProfileComponent extends Component {
     })
   }
 
-  handleSubmit(event) {
+  _handleSubmit(event) {
     event.preventDefault()
 
     const location = this.state.location
@@ -68,11 +68,11 @@ class UserProfileComponent extends Component {
             <input type="text"
               name="location"
               value={this.state.location}
-              onChange={this.handleInputChange}
+              onChange={this._handleInputChange}
               placeholder="Remotely" />
           </label>
           <p className="help-text">Tell us where would you like to ideally work.</p>
-          <input type="submit" value="Save in DynamoDB" className="success button" onClick={this.handleSubmit} />
+          <input type="submit" value="Save in DynamoDB" className="success button" onClick={this._handleSubmit} />
         </form>
       </div>
     )
