@@ -15,6 +15,14 @@ const {
   connectionDefinitions
 } = require('graphql-relay')
 
+const SalaryType = new GraphQLObjectType({
+  name: 'Salary',
+  fields: {
+    start: { type: GraphQLString },
+    end: { type: GraphQLString }
+  }
+})
+
 const JobOfferType = new GraphQLObjectType({
   name: 'JobOffer',
   fields: {
@@ -22,7 +30,10 @@ const JobOfferType = new GraphQLObjectType({
     date: { type: GraphQLString },
     title: { type: GraphQLString },
     description: { type: GraphQLString },
-    company: { type: GraphQLString }
+    company: { type: GraphQLString },
+    expiration: { type: GraphQLString },
+    location: { type: GraphQLString },
+    salary: { type: SalaryType }
   }
 })
 

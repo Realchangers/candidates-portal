@@ -30,12 +30,20 @@ type JobOfferEdge {
   cursor: String!
 }
 
+type Salary {
+  start: String
+  end: String
+}
+
 type JobOffer {
   id: ID!
   date: String
   title: String
   description: String
   company: String
+  expiration: String
+  location: String
+  salary: Salary
 }
 
 type Mutation {
