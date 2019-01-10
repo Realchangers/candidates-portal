@@ -11,8 +11,8 @@ class UserProfileComponent extends Component {
     // reads initial state from props, if provided (by Storybook)
     this.state = { location: this._locationFromProps(props) }
 
-    this.handleInputChange = this._handleInputChange.bind(this);
-    this.handleSubmit = this._handleSubmit.bind(this);
+    this._handleInputChange = this._handleInputChange.bind(this);
+    this._handleSubmit = this._handleSubmit.bind(this);
   }
 
   // component starts with empty props and then it receives props later
