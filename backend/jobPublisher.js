@@ -9,10 +9,10 @@ exports.handler = (event, _context, callback) => {
 
     const identity = Keys.id.S
     if (oldLocation === newLocation) {
-      console.log(`Identity '${identity}' - no change in location.`)
+      console.log(`Identity='${identity}' - field 'location' has not changed`)
     }
     else {
-      console.log(`Identity '${identity}' - location changed from '${oldLocation}' to '${newLocation}'.`)
+      console.log(`Identity='${identity}' - field 'location' changed from '${oldLocation}' to '${newLocation}'`)
     }
   })
 

@@ -93,13 +93,13 @@ module.exports.handler = (event, _context, callback) => {
 
   parseRequestFrom(event)
     .then(request => {
-      console.log(`Request - Cognito:username=${cognitoIdentityId}, query=${request.query}, variables=${JSON.stringify(request.variables)}`)
+      console.log(`Identity='${cognitoIdentityId}'\nQuery=${request.query}\nVariables=${JSON.stringify(request.variables)}`)
       return graphql(schema, request.query, undefined, contextValue, request.variables)
     })
     .then(
       result => callback(null, responseFromCodeAndBody(result)),
       error => {
-        console.error(`Error response - Cognito:username=${cognitoIdentityId}`, error)
+        console.error(`Identity='${cognitoIdentityId}' Error: ${error.message}`, error)
         callback(null, responseFromCodeAndBody({ errors: [{ message: 'Internal Server Error' }] }))
       }
     )
