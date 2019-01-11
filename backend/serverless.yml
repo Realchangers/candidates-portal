@@ -73,7 +73,7 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         StreamSpecification:
-          StreamViewType: NEW_IMAGE # values: (NEW_IMAGE | OLD_IMAGE | NEW_AND_OLD_IMAGES | KEYS_ONLY)
+          StreamViewType: NEW_AND_OLD_IMAGES # NEW_IMAGE | OLD_IMAGE | NEW_AND_OLD_IMAGES | KEYS_ONLY
         TableName: ${self:provider.environment.DYNAMODB_TABLE}
 
 plugins:
