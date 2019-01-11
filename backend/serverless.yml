@@ -47,6 +47,15 @@ functions:
           cors:
             origin: ${self:provider.environment.FRONTEND_URL}
             maxAge: 86400
+  database:
+    handler: database.handler
+    events:
+      - stream:
+          type: dynamodb
+          arn:
+            Fn::GetAtt:
+              - UsersTable
+              - StreamArn
 
 resources:
   Description: Candidates Portal - Backend
@@ -63,14 +72,19 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+        StreamSpecification:
+          StreamViewType: NEW_IMAGE # values: (NEW_IMAGE | OLD_IMAGE | NEW_AND_OLD_IMAGES | KEYS_ONLY)
         TableName: ${self:provider.environment.DYNAMODB_TABLE}
 
 plugins:
   - serverless-dynamodb-local
+  - serverless-plugin-offline-dynamodb-stream
   - serverless-offline # must be last plugin
 
 custom:
   dynamodb:
+    host: localhost
+    port: 8000
     start:
       migrate: true
       seed: true
@@ -79,5 +93,12 @@ custom:
         sources:
           - table: ${self:provider.environment.DYNAMODB_TABLE}
             sources: [./seed/users.json]
+  dynamodbStream:
+    host: localhost
+    port: 8000
+    streams:
+      - table: ${self:provider.environment.DYNAMODB_TABLE}
+        functions:
+          - database
   serverless-offline:
     port: 8080
