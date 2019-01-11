@@ -1,4 +1,4 @@
-const handler = require('./handler')
+const graphql = require('./graphql')
 
 const service = require('./src/service')
 jest.mock('./src/service')
@@ -18,7 +18,7 @@ it('should process GET request correctly', () => {
       }
     }
 
-    handler.query(event, undefined, (error, result) => {
+    graphql.query(event, undefined, (error, result) => {
       expect(error).toBeNull()
       expect(result.statusCode).toBe(200)
       expect(result.body).toBe('{"data":{"user":{"userName":"user@gmail.com","firstName":"Test","lastName":"User"}}}')
@@ -45,7 +45,7 @@ it('should process POST request correctly', () => {
         }'
     }
 
-    handler.query(event, undefined, (error, result) => {
+    graphql.query(event, undefined, (error, result) => {
       expect(error).toBeNull()
       expect(result.statusCode).toBe(200)
       expect(result.body).toBe('{"data":{"user":{"userName":"user@gmail.com","firstName":"Test","lastName":"User"}}}')
@@ -61,7 +61,7 @@ it('should reject unsupported request type', () => {
       httpMethod: 'PUT'
     }
 
-    handler.query(event, undefined, (error, result) => {
+    graphql.query(event, undefined, (error, result) => {
       expect(error).toBeNull()
       expect(result.statusCode).toBe(500)
       expect(result.body).toBe('{"errors":[{"message":"Unsupported HTTP method: PUT"}]}')
@@ -77,7 +77,7 @@ it('should reject query without parameters', () => {
       httpMethod: 'GET'
     }
 
-    handler.query(event, undefined, (error, result) => {
+    graphql.query(event, undefined, (error, result) => {
       expect(error).toBeNull()
       expect(result.statusCode).toBe(500)
       expect(result.body).toBe('\{"errors":[{"message":"No parameters provided. You must provide \'query\' parameter in the request."}]}')
@@ -96,7 +96,7 @@ it('should reject query with wrong parameters', () => {
       }
     }
 
-    handler.query(event, undefined, (error, result) => {
+    graphql.query(event, undefined, (error, result) => {
       expect(error).toBeNull()
       expect(result.statusCode).toBe(500)
       expect(result.body).toBe('{"errors":[{"message":"Unable to find parameter \'query\' in GET request."}]}')
@@ -112,7 +112,7 @@ it('should reject POST request without body', () => {
       httpMethod: 'POST'
     }
 
-    handler.query(event, undefined, (error, result) => {
+    graphql.query(event, undefined, (error, result) => {
       expect(error).toBeNull()
       expect(result.statusCode).toBe(500)
       expect(result.body).toBe('{"errors":[{"message":"No body specified in POST request."}]}')
@@ -129,7 +129,7 @@ it('should reject POST request with incorrect JSON payload', () => {
       body: '<xml><query>hohoho</query></xml>'
     }
 
-    handler.query(event, undefined, (error, result) => {
+    graphql.query(event, undefined, (error, result) => {
       expect(error).toBeNull()
       expect(result.statusCode).toBe(500)
       expect(result.body).toBe('{"errors":[{"message":"Unable to parse request. Reason: Unexpected token < in JSON at position 0"}]}')
@@ -146,7 +146,7 @@ it('should reject POST request with JSON payload without query', () => {
       body: '{"yolo": "here goes my query"}'
     }
 
-    handler.query(event, undefined, (error, result) => {
+    graphql.query(event, undefined, (error, result) => {
       expect(error).toBeNull()
       expect(result.statusCode).toBe(500)
       expect(result.body).toBe('{"errors":[{"message":"Unable to find field \'query\' in JSON payload."}]}')

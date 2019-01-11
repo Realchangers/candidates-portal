@@ -28,8 +28,8 @@ provider:
     FRONTEND_URL: http://realchangers-candidates-portal-${self:provider.stage}-frontend.s3-website-eu-west-1.amazonaws.com
 
 functions:
-  query:
-    handler: handler.query
+  graphql:
+    handler: graphql.handler
     events:
       - http:
           path: query
@@ -47,8 +47,8 @@ functions:
           cors:
             origin: ${self:provider.environment.FRONTEND_URL}
             maxAge: 86400
-  database:
-    handler: database.handler
+  jobPublisher:
+    handler: jobPublisher.handler
     events:
       - stream:
           type: dynamodb
@@ -99,6 +99,6 @@ custom:
     streams:
       - table: ${self:provider.environment.DYNAMODB_TABLE}
         functions:
-          - database
+          - jobPublisher
   serverless-offline:
     port: 8080

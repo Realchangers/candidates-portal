@@ -84,7 +84,7 @@ const cognitoIdentityFromEvent = (event) => {
   }
 }
 
-module.exports.query = (event, _context, callback) => {
+module.exports.handler = (event, _context, callback) => {
 
   const cognitoIdentityId = cognitoIdentityFromEvent(event)
   const contextValue = {
