@@ -1,7 +1,9 @@
 
 exports.handler = (event, _context, callback) => {
 
-  console.log(`Received event: ${JSON.stringify(event, null, 2)}`)
+  event.Records.forEach((record) => {
+    console.log(`Event: ${record.eventName}, Record: ${JSON.stringify(record.dynamodb, null, 2)}`)
+  })
 
-  callback(null, `Successfully processed ${event.Records.length} records. `)
+  callback(null, `Successfully processed ${event.Records.length} records.`)
 }
