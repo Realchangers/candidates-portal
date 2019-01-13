@@ -26,7 +26,7 @@ class JobDetail extends Component {
     return (
       <div>
         <h1>{title} - {company}</h1>
-        <div>{description}</div>
+        <div><pre>{description}</pre></div>
         <hr />
         <ul>
           <li>Expiration: {expiration}</li>
