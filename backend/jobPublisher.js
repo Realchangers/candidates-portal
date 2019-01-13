@@ -20,11 +20,9 @@ exports.handler = (event, _context, callback) => {
 }
 
 function getProfileLocation(record) {
-  if (record.profile) {
-    if (record.profile.M) {
-      if (record.profile.M.location) {
-        return record.profile.M.location.S
-      }
+  if (record) {
+    if (record.location) {
+      return record.location.S
     }
   }
   return null
