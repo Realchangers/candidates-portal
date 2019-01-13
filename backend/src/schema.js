@@ -10,7 +10,6 @@ const {
 
 const {
   connectionArgs,
-  connectionFromArray,
   mutationWithClientMutationId,
   connectionDefinitions
 } = require('graphql-relay')
@@ -55,21 +54,24 @@ const UserType = new GraphQLObjectType({
   name: 'User',
   fields: {
     id: { type: GraphQLID },
-    profile: { type: UserProfileType },
+    profile: {
+      type: UserProfileType,
+      resolve: (_source, _args, context) => service.userProfile(context)
+    },
 
     jobOffers: {
       type: JobOfferConnection,
       args: {
         ...connectionArgs
       },
-      resolve: (parent, args) => parent.jobOffers ? connectionFromArray(parent.jobOffers, args) : null
+      resolve: (_source, args, context) => service.jobOffers(args, context)
     },
     jobOffer: {
       type: JobOfferType,
       args: {
         id: { type: GraphQLNonNull(GraphQLID) }
       },
-      resolve: (parent, args) => parent.jobOffers.find((offer) => offer.id === args.id)
+      resolve: (_source, args, context) => service.jobOffer(context, args.id)
     }
   }
 })
