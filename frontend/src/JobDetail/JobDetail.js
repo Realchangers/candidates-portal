@@ -5,6 +5,17 @@ import { Link } from 'react-router-dom'
 
 class JobDetail extends Component {
   render() {
+    if (this.props.jobOffer === null) {
+      return (
+        <div>
+          <h1>404 - Job not found!</h1>
+          <div>We are sorry, but we really don't have such job in our database.</div>
+          <hr />
+          <Link to="/">Back</Link>
+        </div>
+      )
+    }
+
     const { title, company, description, expiration, location, salary } = this.props.jobOffer
 
     let salaryElement

@@ -33,3 +33,7 @@ storiesOf('Job Detail', module)
     }
     return <StubContainer Component={JobDetail} props={props} />
   })
+  .add('non-existing job', () => {
+    const props = { jobOffer: null }
+    return <StubContainer Component={JobDetail} props={props} />
+  })
