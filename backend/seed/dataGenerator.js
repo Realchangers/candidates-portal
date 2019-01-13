@@ -1,6 +1,6 @@
 const fs = require('fs')
 
-const offlineIdentity = '45d7c1e0-4770-4fc8-97ca-f707c5e6b841' // offlineContext_cognitoIdentityId
+const offlineIdentity = 'offlineContext_cognitoIdentityId' // '45d7c1e0-4770-4fc8-97ca-f707c5e6b841'
 const jobDescription = fs.readFileSync('./jobDescription.txt', 'utf-8')
 
 let jobOffers = []
