@@ -11,8 +11,8 @@
     "dynamodb:install": "sls dynamodb install",
     "dynamodb:remove": "sls dynamodb remove",
     "deploy": "sls deploy",
-    "deploy:database": "sls deploy -f database",
-    "deploy:query": "sls deploy -f query"
+    "deploy:graphql": "sls deploy -f graphql",
+    "deploy:publisher": "sls deploy -f jobPublisher"
   },
   "dependencies": {
     "aws-sdk": "^2.361.0",
