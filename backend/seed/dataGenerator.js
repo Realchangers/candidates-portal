@@ -4,9 +4,10 @@ const offlineIdentity = 'offlineContext_cognitoIdentityId' // '45d7c1e0-4770-4fc
 const jobDescription = fs.readFileSync('./jobDescription.txt', 'utf-8')
 
 let jobOffers = []
-for (let i = 1; i <= 5; i++) {
+for (let i = 1; i <= 20; i++) {
+  const jobID = `${i}`.padStart(5, '0')
   jobOffers.push({
-    id: `job_${i}`, // RANGE
+    id: `job_${jobID}`, // RANGE
     cognitoID: offlineIdentity, // HASH
     title: `Job ${i}`,
     company: `Company ${i}`,
