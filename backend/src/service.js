@@ -7,10 +7,11 @@ module.exports.currentUser = (context) => {
 
 module.exports.jobOffers = (args, context) => {
   return documentClient.query({
-    TableName: process.env.JOBS_TABLE,
-    KeyConditionExpression: 'cognitoID = :identity',
+    TableName: process.env.TABLE_NAME,
+    KeyConditionExpression: 'cognitoID = :cognitoID AND begins_with(id, :jobPrefix)',
     ExpressionAttributeValues: {
-      ':identity': context.cognitoIdentityId
+      ':cognitoID': context.cognitoIdentityId,
+      ':jobPrefix': 'job_'
     }
   })
     .promise()
@@ -19,7 +20,7 @@ module.exports.jobOffers = (args, context) => {
 
 module.exports.jobOffer = (context, id) => {
   return documentClient.get({
-    TableName: process.env.JOBS_TABLE,
+    TableName: process.env.TABLE_NAME,
     Key: {
       cognitoID: context.cognitoIdentityId,
       id
@@ -31,8 +32,11 @@ module.exports.jobOffer = (context, id) => {
 
 module.exports.userProfile = (context) => {
   return documentClient.get({
-    TableName: process.env.PROFILES_TABLE,
-    Key: { 'id': context.cognitoIdentityId },
+    TableName: process.env.TABLE_NAME,
+    Key: {
+      'cognitoID': context.cognitoIdentityId,
+      'id': 'profile'
+    },
   })
     .promise()
     .then(result => result.Item)
@@ -40,8 +44,11 @@ module.exports.userProfile = (context) => {
 
 module.exports.updateUserProfile = (location, context) => {
   return documentClient.update({
-    TableName: process.env.PROFILES_TABLE,
-    Key: { 'id': context.cognitoIdentityId },
+    TableName: process.env.TABLE_NAME,
+    Key: {
+      'cognitoID': context.cognitoIdentityId,
+      'id': 'profile'
+    },
     UpdateExpression: 'SET #newLocation = :newLocation',
     ExpressionAttributeNames: {
       '#newLocation': 'location'
@@ -49,7 +56,7 @@ module.exports.updateUserProfile = (location, context) => {
     ExpressionAttributeValues: {
       ':newLocation': location
     },
-    ReturnValues: "UPDATED_NEW"
+    ReturnValues: 'UPDATED_NEW'
   })
     .promise()
     .then(result => ({ profile: result.Attributes }))

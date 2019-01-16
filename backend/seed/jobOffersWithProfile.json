@@ -1,6 +1,6 @@
 [
   {
-    "id": "1",
+    "id": "job_1",
     "cognitoID": "offlineContext_cognitoIdentityId",
     "title": "Job 1",
     "company": "Company 1",
@@ -24,7 +24,7 @@
     ]
   },
   {
-    "id": "2",
+    "id": "job_2",
     "cognitoID": "offlineContext_cognitoIdentityId",
     "title": "Job 2",
     "company": "Company 2",
@@ -48,7 +48,7 @@
     ]
   },
   {
-    "id": "3",
+    "id": "job_3",
     "cognitoID": "offlineContext_cognitoIdentityId",
     "title": "Job 3",
     "company": "Company 3",
@@ -72,7 +72,7 @@
     ]
   },
   {
-    "id": "4",
+    "id": "job_4",
     "cognitoID": "offlineContext_cognitoIdentityId",
     "title": "Job 4",
     "company": "Company 4",
@@ -96,7 +96,7 @@
     ]
   },
   {
-    "id": "5",
+    "id": "job_5",
     "cognitoID": "offlineContext_cognitoIdentityId",
     "title": "Job 5",
     "company": "Company 5",
@@ -118,5 +118,23 @@
       "Permanent",
       "Full-time"
     ]
+  },
+  {
+    "id": "profile",
+    "cognitoID": "offlineContext_cognitoIdentityId",
+    "causes": [
+      "Eliminate Poverty",
+      "Fight hunger",
+      "Improve health & wellbeing"
+    ],
+    "location": "London",
+    "technologies": [
+      "Swift",
+      "Java"
+    ],
+    "profiles": {
+      "github": "https://github.com/abc",
+      "linkedin": "https://linkedin.com/abc"
+    }
   }
 ]

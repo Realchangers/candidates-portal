@@ -22,15 +22,9 @@ provider:
      Action:
       - dynamodb:GetItem
       - dynamodb:UpdateItem
-     Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.JOBS_TABLE}"
-   - Effect: Allow
-     Action:
-      - dynamodb:GetItem
-      - dynamodb:UpdateItem
-     Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.PROFILES_TABLE}"
+     Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TABLE_NAME}"
   environment:
-    JOBS_TABLE: candidates-portal-jobs-${self:provider.stage}
-    PROFILES_TABLE: candidates-portal-profiles-${self:provider.stage}
+    TABLE_NAME: candidates-portal-${self:provider.stage}
     FRONTEND_URL: http://realchangers-candidates-portal-${self:provider.stage}-frontend.s3-website-eu-west-1.amazonaws.com
 
 functions:
@@ -79,25 +73,12 @@ resources:
             KeyType: HASH
           - AttributeName: id
             KeyType: RANGE
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-        TableName: ${self:provider.environment.JOBS_TABLE}
-    ProfilesTable:
-      Type: 'AWS::DynamoDB::Table'
-      Properties:
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
-        ProvisionedThroughput:
+        ProvisionedThroughput: # fixed provisioned throughput for non-production use
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         StreamSpecification:
           StreamViewType: NEW_AND_OLD_IMAGES # NEW_IMAGE | OLD_IMAGE | NEW_AND_OLD_IMAGES | KEYS_ONLY
-        TableName: ${self:provider.environment.PROFILES_TABLE}
+        TableName: ${self:provider.environment.TABLE_NAME}
 
 plugins:
   - serverless-dynamodb-local
@@ -115,16 +96,14 @@ custom:
     seed:
       domain:
         sources:
-          - table: ${self:provider.environment.JOBS_TABLE}
-            sources: [./seed/jobOffers.json]
-          - table: ${self:provider.environment.PROFILES_TABLE}
-            sources: [./seed/profiles.json]
+          - table: ${self:provider.environment.TABLE_NAME}
+            sources: [./seed/jobOffersWithProfile.json]
   dynamodbStream:
     host: localhost
     port: 8000
     pollForever: true
     streams:
-      - table: ${self:provider.environment.PROFILES_TABLE}
+      - table: ${self:provider.environment.TABLE_NAME}
         functions:
           - jobPublisher
   serverless-offline:

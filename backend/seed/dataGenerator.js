@@ -6,7 +6,7 @@ const jobDescription = fs.readFileSync('./jobDescription.txt', 'utf-8')
 let jobOffers = []
 for (let i = 1; i <= 5; i++) {
   jobOffers.push({
-    id: `${i}`, // RANGE
+    id: `job_${i}`, // RANGE
     cognitoID: offlineIdentity, // HASH
     title: `Job ${i}`,
     company: `Company ${i}`,
@@ -21,10 +21,11 @@ for (let i = 1; i <= 5; i++) {
     jobTypes: ["Permanent", "Full-time"]
   })
 }
-fs.writeFileSync('./jobOffers.json', JSON.stringify(jobOffers, null, 2), 'utf-8')
 
-const profile = {
-  id: offlineIdentity,
+// profile information
+jobOffers.push({
+  id: 'profile', // RANGE
+  cognitoID: offlineIdentity, // HASH
   causes: ['Eliminate Poverty', 'Fight hunger', 'Improve health & wellbeing'],
   location: 'London',
   technologies: ['Swift', 'Java'],
@@ -32,5 +33,6 @@ const profile = {
     github: 'https://github.com/abc',
     linkedin: 'https://linkedin.com/abc'
   }
-}
-fs.writeFileSync('./profiles.json', JSON.stringify([profile], null, 2), 'utf-8')
+})
+
+fs.writeFileSync('./jobOffersWithProfile.json', JSON.stringify(jobOffers, null, 2), 'utf-8')
