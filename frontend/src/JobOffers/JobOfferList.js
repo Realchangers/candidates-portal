@@ -52,7 +52,7 @@ class JobOfferList extends Component {
       return
     }
 
-    this.props.relay.loadMore(50, error => {
+    this.props.relay.loadMore(10, error => {
       if (error) {
         console.log(`Unable to load more items. Error: ${error}`)
       }
@@ -66,7 +66,7 @@ export default createPaginationContainer(
     currentUser: graphql`
       fragment JobOfferList_currentUser on User
       @argumentDefinitions(
-        count: {type: "Int", defaultValue: 5}
+        count: {type: "Int", defaultValue: 10}
         cursor: {type: "String"}
       ) {
         jobOffers(
