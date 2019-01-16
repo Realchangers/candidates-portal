@@ -1,5 +1,5 @@
 const { documentClient } = require('./config')
-const { connectionFromArray } = require('graphql-relay')
+const { connectionFromArraySlice, cursorToOffset } = require('graphql-relay')
 
 module.exports.currentUser = (context) => {
   return { 'id': context.cognitoIdentityId }
@@ -12,10 +12,14 @@ module.exports.jobOffers = (args, context) => {
     ExpressionAttributeValues: {
       ':cognitoID': context.cognitoIdentityId,
       ':jobPrefix': 'job_'
-    }
+    },
+    Limit: limitFromArgs(args)
   })
     .promise()
-    .then(result => result.Items ? connectionFromArray(result.Items, args) : null)
+    .then(result => connectionFromArraySlice(result.Items, args, {
+      sliceStart: 0,
+      arrayLength: result.Items.length
+    }))
 }
 
 module.exports.jobOffer = (context, id) => {
@@ -60,4 +64,19 @@ module.exports.updateUserProfile = (location, context) => {
   })
     .promise()
     .then(result => ({ profile: result.Attributes }))
+}
+
+function limitFromArgs(args) {
+  let limit = 10
+
+  if (args.first) {
+    limit = args.first + 1 // select one more item, so we know if we have more pages
+
+    if (args.after) {
+      const after = cursorToOffset(args.after) + 1 // add one to the offset, so it represents count
+      limit += after
+    }
+  }
+
+  return limit
 }
