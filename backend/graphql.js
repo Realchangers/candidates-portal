@@ -60,15 +60,8 @@ const parsePostRequest = (event) => {
   })
 }
 
-const responseFromCodeAndBody = (cognitoIdentityId, body) => {
+const responseFromCodeAndBody = (body) => {
   const code = body.errors ? 500 : 200
-
-  if (body.errors) {
-    body.errors.forEach(error => {
-      console.error(`Identity='${cognitoIdentityId}' Error: ${error.message}`)
-    })
-  }
-
   return ({
     statusCode: code,
     headers: {
@@ -104,9 +97,15 @@ module.exports.handler = (event, _context, callback) => {
       return graphql(schema, request.query, undefined, contextValue, request.variables)
     })
     .then(
-      result => callback(null, responseFromCodeAndBody(cognitoIdentityId, result)),
+      result => {
+        if (result.errors) {
+          console.error(`Identity='${cognitoIdentityId}' Error: %j`, result.errors)
+        }
+        callback(null, responseFromCodeAndBody(result))
+      },
       error => {
-        callback(null, responseFromCodeAndBody(cognitoIdentityId, { errors: [{ message: 'Internal Server Error' }] }))
+        console.log(`Identity='${cognitoIdentityId}', internal error=${error.message}`, error)
+        callback(null, responseFromCodeAndBody({ errors: [{ message: 'Internal Server Error' }] }))
       }
     )
 }
