@@ -15,11 +15,11 @@
     "deploy:publisher": "sls deploy -f jobPublisher"
   },
   "dependencies": {
-    "aws-sdk": "^2.361.0",
     "graphql": "^14.0.2",
     "graphql-relay": "^0.5.5"
   },
   "devDependencies": {
+    "aws-sdk": "^2.361.0",
     "jest": "^23.6.0",
     "serverless-dynamodb-local": "^0.2.35",
     "serverless-offline": "^3.31.3",
