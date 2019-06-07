@@ -21,7 +21,7 @@
   "devDependencies": {
     "aws-sdk": "^2.437.0",
     "jest": "^23.6.0",
-    "serverless-dynamodb-local": "^0.2.35",
+    "serverless-dynamodb-local": "^0.2.38",
     "serverless-offline": "^3.31.3",
     "serverless-plugin-offline-dynamodb-stream": "^1.0.18"
   }
