@@ -88,9 +88,11 @@ plugins:
 
 custom:
   dynamodb:
-    host: localhost
-    port: 8000
+    stages:
+      - dev
     start:
+      host: localhost
+      port: 8000
       migrate: true
       seed: true
       inMemory: true
